@@ -1,115 +1,178 @@
-import Image from "next/image";
-import localFont from "next/font/local";
+import {IoIosQrScanner, IoMdArrowDropdown, IoMdNotifications} from "react-icons/io";
+import {MdOutlineKeyboardArrowDown, MdOutlineKeyboardArrowUp} from "react-icons/md";
+import {useEffect, useRef, useState} from "react";
+import {IoEye, IoFilter, IoFilterOutline} from "react-icons/io5";
+import {FaFilter, FaRegEnvelope, FaSearch} from "react-icons/fa";
+import MainLayout from "@/components/layouts/MainLayout";
+import OperatorDashboard from "@/components/organisms/operator/OperatorDashboard";
+import ReviewerDashboard from "@/components/organisms/reviewer/ReviewerDashboard";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+const DataTable = () => {
+  // State to toggle dropdown visibility
+  const [dropdownOpen, setDropdownOpen] = useState(null);
+
+  // Ref to capture the element for dropdown
+  const dropdownRefs = useRef([]);
+
+  const handleToggle = (index) => {
+    setDropdownOpen(dropdownOpen === index ? null : index);
+  };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        dropdownOpen !== null && // dropdown is open
+        dropdownRefs.current[dropdownOpen] && // ref exists
+        !dropdownRefs.current[dropdownOpen].contains(event.target) // clicked outside the dropdown
+      ) {
+        setDropdownOpen(null);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [dropdownOpen]);
+
+  return (
+    <div className="container mx-auto">
+      <div className="overflow-x-auto bg-white">
+        <table className="min-w-full bg-white">
+          <thead className="bg-gray-100 rounded-lg">
+          <tr>
+            <th className="px-6 py-3 text-left text-gray-600">Nama 1</th>
+            <th className="px-6 py-3 text-left text-gray-600">Nama 2</th>
+            <th className="px-6 py-3 text-left text-gray-600">Nama 3</th>
+            <th className="px-6 py-3 text-left text-gray-600">Nama 4</th>
+            <th className="px-6 py-3 text-left text-gray-600">Status</th>
+            <th className="px-6 py-3"></th>
+          </tr>
+          </thead>
+          <tbody>
+          {[1, 2, 3, 4, 5].map((row, index) => (
+            <tr key={index} className="border-b">
+              <td className="px-6 py-4 text-gray-700">Nama 1</td>
+              <td className="px-6 py-4 text-gray-700">Nama 2</td>
+              <td className="px-6 py-4 text-gray-700">Nama 3</td>
+              <td className="px-6 py-4 text-gray-700">Nama 4</td>
+              <td className="px-6 py-4 flex items-center">
+                <span className="w-2.5 h-2.5 rounded-full bg-purple-500 mr-2"></span>
+                Status
+              </td>
+              <td className="px-6 py-4 text-right relative">
+                {/* Ellipsis Button */}
+                <button
+                  onClick={() => handleToggle(index)}
+                  className="text-gray-400 hover:text-gray-600"
+                >
+                  ⋮
+                </button>
+
+                {/* Dropdown Menu */}
+                {dropdownOpen === index && (
+                  <div
+                    ref={(el) => (dropdownRefs.current[index] = el)} // Set ref for each dropdown
+                    className="absolute right-0 mt-2 w-40 bg-white border rounded shadow-lg z-10 text-start"
+                  >
+                    <ul>
+                      <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Edit</li>
+                      <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Hapus</li>
+                    </ul>
+                  </div>
+                )}
+              </td>
+            </tr>
+          ))}
+          </tbody>
+        </table>
+      </div>
+      <div className="flex items-center justify-between mt-4">
+        <span className="text-gray-600 text-sm">Menampilkan 10 dari 1000 Kolom</span>
+        <div className="flex space-x-1">
+          <button className="px-3 py-1 border rounded-l bg-gray-200 text-gray-700">Sebelumnya</button>
+          <button className="px-3 py-1 border bg-sky-500 text-white">1</button>
+          <button className="px-3 py-1 border bg-gray-200 text-gray-700">2</button>
+          <button className="px-3 py-1 border bg-gray-200 text-gray-700">...</button>
+          <button className="px-3 py-1 border bg-gray-200 text-gray-700">10</button>
+          <button className="px-3 py-1 border rounded-r bg-gray-200 text-gray-700">Selanjutnya</button>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default function Home() {
   return (
-    <div
-      className={`${geistSans.variable} ${geistMono.variable} grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]`}
-    >
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/pages/index.js
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <MainLayout>
+      <div className='container mx-auto'>
+        <OperatorDashboard />
+        <ReviewerDashboard />
+        <div className='flex flex-col gap-4 my-8'>
+          <div className='flex flex-row items-center justify-between w-full gap-8'>
+            <IoEye className='text-xl'/>
+            <div className='flex flex-col border-2 border-black rounded-lg px-4 py-2 w-full gap-4'>
+              <div className='flex flex-row items-center justify-between'>
+                <h6 className='text-lg font-bold'>BOX 1764</h6>
+                <MdOutlineKeyboardArrowUp className='text-2xl'/>
+              </div>
+              <hr className='border-1 border-black'/>
+              <ul>
+                <li>- Form 1770 S I - II</li>
+                <li>- Lampiran 1</li>
+                <li>- Lampiran 2</li>
+                <li>- Lampiran 3</li>
+                <li>- Laporan Keuangan</li>
+                <li>- Investasi</li>
+                <li>- Harta Piutang</li>
+              </ul>
+            </div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+        {/* Filter */}
+        <div className="flex items-center justify-between py-4">
+          {/* Search Input */}
+          <div className="relative">
+            <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"/>
+            <input
+              type="text"
+              placeholder="Search here..."
+              className="pl-10 pr-4 py-2 border rounded-lg text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            />
+          </div>
+
+          <div className='flex flex-row items-center gap-4'>
+            {/* Status Button */}
+            <button
+              className="flex items-center space-x-2 bg-sky-500 text-white px-4 py-2 rounded-md hover:bg-sky-600 focus:outline-none focus:ring-2 focus:ring-sky-400">
+              <FaRegEnvelope/>
+              <span>Status</span>
+            </button>
+
+            {/* Filter Button */}
+            <button
+              className="flex items-center space-x-2 bg-sky-500 text-white px-4 py-2 rounded-md hover:bg-sky-600 focus:outline-none focus:ring-2 focus:ring-sky-400">
+              <IoFilter/>
+              <span>Filter</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Table */}
+        <DataTable/>
+
+        {/* Heading */}
+        <div className='flex flex-col items-center justify-center gap-2 py-4 border-2 border-gray-300 rounded-lg'>
+          <div className='flex flex-row items-center gap-4'>
+            <h6 className='text-md font-bold'>WP Moanalisa</h6>
+            <div>&#8226;</div>
+            <h6 className='text-md font-bold'>NPWP.XXX.XXX.XXX.3765</h6>
+          </div>
+          <h6 className='text-md'>Pembetulan SPT Tahunan</h6>
+          <h6 className='text-md'>No. 1264</h6>
+        </div>
+      </div>
+    </MainLayout>
   );
 }
