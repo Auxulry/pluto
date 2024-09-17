@@ -22,11 +22,36 @@ export default function NavMenu() {
       >
         Assign Box
       </h6>
-      <h6 className={`text-md font-bold ${isActive('/pemindaian')}`}>Pemindaian</h6>
-      <h6 className={`text-md font-bold ${isActive('/kelengkapan-dokumen')}`}>Kelengkapan Dokumen</h6>
-      <h6 className={`text-md font-bold ${isActive('/extraction-data')}`}>Extraction Data</h6>
-      <h6 className={`text-md font-bold ${isActive('/perhitungan-pajak')}`}>Perhitungan Pajak</h6>
-      <h6 className={`text-md font-bold ${isActive('/review-rejected')}`}>Review Rejected</h6>
+      <h6
+        className={`text-md font-bold cursor-pointer ${isActive('/scanner')}`}
+        onClick={() => router.push('/scanner')}
+      >
+        Pemindaian
+      </h6>
+      <h6
+        className={`text-md font-bold cursor-pointer ${isActive('/completes-document')}`}
+        onClick={() => router.push('/completes-document')}
+      >
+        Kelengkapan Dokumen
+      </h6>
+      <h6
+        className={`text-md font-bold cursor-pointer ${isActive('/extraction')}`}
+        onClick={() => router.push('/extraction')}
+      >
+        Extraction Data
+      </h6>
+      <h6
+        className={`text-md font-bold cursor-pointer ${isActive('/tax-calculation')}`}
+        onClick={() => router.push('/tax-calculation')}
+      >
+        Perhitungan Pajak
+      </h6>
+      <h6
+        className={`text-md font-bold cursor-pointer ${isActive('/review-rejected')}`}
+        onClick={() => router.push('/review-rejected')}
+      >
+        Review Rejected
+      </h6>
     </div>
   );
 }
