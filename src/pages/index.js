@@ -1,11 +1,13 @@
 import {IoIosQrScanner, IoMdArrowDropdown, IoMdNotifications} from "react-icons/io";
-import {MdOutlineKeyboardArrowDown, MdOutlineKeyboardArrowUp} from "react-icons/md";
-import {useEffect, useRef, useState} from "react";
-import {IoEye, IoFilter, IoFilterOutline} from "react-icons/io5";
+import {MdOutlineArrowOutward, MdOutlineKeyboardArrowDown, MdOutlineKeyboardArrowUp} from "react-icons/md";
+import React, {useEffect, useRef, useState} from "react";
+import {IoAddCircleOutline, IoEye, IoFilter, IoFilterOutline} from "react-icons/io5";
 import {FaFilter, FaRegEnvelope, FaSearch} from "react-icons/fa";
 import MainLayout from "@/components/layouts/MainLayout";
 import OperatorDashboard from "@/components/organisms/operator/OperatorDashboard";
 import ReviewerDashboard from "@/components/organisms/reviewer/ReviewerDashboard";
+import Modal from "@/components/atoms/modal/Modal";
+import TextField from "@/components/atoms/text-field/TextField";
 
 const DataTable = () => {
   // State to toggle dropdown visibility
@@ -104,74 +106,173 @@ const DataTable = () => {
 };
 
 export default function Home() {
+  const [isOpen, setIsOpen] = useState(false)
+
   return (
     <MainLayout>
       <div className='container mx-auto'>
-        <OperatorDashboard />
-        <ReviewerDashboard />
-        <div className='flex flex-col gap-4 my-8'>
-          <div className='flex flex-row items-center justify-between w-full gap-8'>
-            <IoEye className='text-xl'/>
-            <div className='flex flex-col border-2 border-black rounded-lg px-4 py-2 w-full gap-4'>
-              <div className='flex flex-row items-center justify-between'>
-                <h6 className='text-lg font-bold'>BOX 1764</h6>
-                <MdOutlineKeyboardArrowUp className='text-2xl'/>
+        <div className='flex flex-row items-center justify-between my-4'>
+          <div>
+            <h2 className="text-lg font-bold">Dashboard</h2>
+          </div>
+          <button
+            className="bg-sky-500 text-white font-bold py-2 px-4 rounded hover:bg-sky-600 flex flex-row items-center gap-2 cursor-pointer"
+            onClick={() => setIsOpen(true)}
+          >
+            <IoAddCircleOutline />
+            <span>Request New Box</span>
+          </button>
+        </div>
+        <Modal
+          isOpen={isOpen}
+          onClose={() => setIsOpen(false)}
+          width='w-1/3'
+        >
+          <h2 className="text-2xl font-bold mb-4">Request Box</h2>
+          <div className="mb-4">
+            <TextField
+              type="number"
+              label='Jumlah Box'
+              placeholder='Input Jumlah Box'
+            />
+          </div>
+          <div className='flex flex-row-reverse items-center gap-4'>
+            <button
+              className='px-4 py-2 rounded focus:outline-none font-medium bg-green-500 text-white hover:bg-green-600'
+            >
+              Submit
+            </button>
+            <button
+              className='px-4 py-2 rounded focus:outline-none font-medium text-black hover:text-gray-600'
+              onClick={() => setIsOpen(false)}
+            >
+              Cancel
+            </button>
+          </div>
+        </Modal>
+        <div className='flex flex-row items-center justify-between my-8 gap-4'>
+          <div
+            className='flex flex-col bg-gray-100 rounded-lg p-4 gap-4 w-1/4'
+          >
+            <div>
+              <h6 className='text-lg font-bold'>Operator</h6>
+              <p className='text-sm'>Total keseluruhan operator</p>
+            </div>
+            <div className='flex flex-row items-center justify-between'>
+              <h2 className='text-xl font-bold'>90</h2>
+              <div className='bg-gray-600 rounded-lg p-2'>
+                <MdOutlineArrowOutward className='text-xl text-white'/>
               </div>
-              <hr className='border-1 border-black'/>
-              <ul>
-                <li>- Form 1770 S I - II</li>
-                <li>- Lampiran 1</li>
-                <li>- Lampiran 2</li>
-                <li>- Lampiran 3</li>
-                <li>- Laporan Keuangan</li>
-                <li>- Investasi</li>
-                <li>- Harta Piutang</li>
-              </ul>
+            </div>
+          </div>
+          <div
+            className='flex flex-col bg-gray-100 rounded-lg p-4 gap-4 w-1/4'
+          >
+            <div>
+              <h6 className='text-lg font-bold'>Box di Gudang</h6>
+              <p className='text-sm'>Total keseluruhan box yang ada pada gudang.</p>
+            </div>
+            <div className='flex flex-row items-center justify-between'>
+              <h2 className='text-xl font-bold'>1.200</h2>
+              <div className='bg-gray-600 rounded-lg p-2'>
+                <MdOutlineArrowOutward className='text-xl text-white'/>
+              </div>
+            </div>
+          </div>
+          <div
+            className='flex flex-col bg-gray-100 rounded-lg p-4 gap-4 w-1/4'
+          >
+            <div>
+              <h6 className='text-lg font-bold'>Dokumen sedang discan</h6>
+              <p className='text-sm'>Total dokumen yang sedang discan operator</p>
+            </div>
+            <div className='flex flex-row items-center justify-between'>
+              <h2 className='text-xl font-bold'>650</h2>
+              <div className='bg-gray-600 rounded-lg p-2'>
+                <MdOutlineArrowOutward className='text-xl text-white'/>
+              </div>
+            </div>
+          </div>
+          <div
+            className='flex flex-col bg-gray-100 rounded-lg p-4 gap-4 w-1/4'
+          >
+            <div>
+              <h6 className='text-lg font-bold'>Dokumen Siap Scan</h6>
+              <p className='text-sm'>Total dokument yang siap di scan operator</p>
+            </div>
+            <div className='flex flex-row items-center justify-between'>
+              <h2 className='text-xl font-bold'>550</h2>
+              <div className='bg-gray-600 rounded-lg p-2'>
+                <MdOutlineArrowOutward className='text-xl text-white'/>
+              </div>
             </div>
           </div>
         </div>
-        {/* Filter */}
-        <div className="flex items-center justify-between py-4">
-          {/* Search Input */}
-          <div className="relative">
-            <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"/>
-            <input
-              type="text"
-              placeholder="Search here..."
-              className="pl-10 pr-4 py-2 border rounded-lg text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
-          </div>
+        {/*<OperatorDashboard />*/}
+        {/*<ReviewerDashboard />*/}
+        {/*<div className='flex flex-col gap-4 my-8'>*/}
+        {/*  <div className='flex flex-row items-center justify-between w-full gap-8'>*/}
+        {/*    <IoEye className='text-xl'/>*/}
+        {/*    <div className='flex flex-col border-2 border-black rounded-lg px-4 py-2 w-full gap-4'>*/}
+        {/*      <div className='flex flex-row items-center justify-between'>*/}
+        {/*        <h6 className='text-lg font-bold'>BOX 1764</h6>*/}
+        {/*        <MdOutlineKeyboardArrowUp className='text-2xl'/>*/}
+        {/*      </div>*/}
+        {/*      <hr className='border-1 border-black'/>*/}
+        {/*      <ul>*/}
+        {/*        <li>- Form 1770 S I - II</li>*/}
+        {/*        <li>- Lampiran 1</li>*/}
+        {/*        <li>- Lampiran 2</li>*/}
+        {/*        <li>- Lampiran 3</li>*/}
+        {/*        <li>- Laporan Keuangan</li>*/}
+        {/*        <li>- Investasi</li>*/}
+        {/*        <li>- Harta Piutang</li>*/}
+        {/*      </ul>*/}
+        {/*    </div>*/}
+        {/*  </div>*/}
+        {/*</div>*/}
+        {/*/!* Filter *!/*/}
+        {/*<div className="flex items-center justify-between py-4">*/}
+        {/*  /!* Search Input *!/*/}
+        {/*  <div className="relative">*/}
+        {/*    <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"/>*/}
+        {/*    <input*/}
+        {/*      type="text"*/}
+        {/*      placeholder="Search here..."*/}
+        {/*      className="pl-10 pr-4 py-2 border rounded-lg text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-400"*/}
+        {/*    />*/}
+        {/*  </div>*/}
 
-          <div className='flex flex-row items-center gap-4'>
-            {/* Status Button */}
-            <button
-              className="flex items-center space-x-2 bg-sky-500 text-white px-4 py-2 rounded-md hover:bg-sky-600 focus:outline-none focus:ring-2 focus:ring-sky-400">
-              <FaRegEnvelope/>
-              <span>Status</span>
-            </button>
+        {/*  <div className='flex flex-row items-center gap-4'>*/}
+        {/*    /!* Status Button *!/*/}
+        {/*    <button*/}
+        {/*      className="flex items-center space-x-2 bg-sky-500 text-white px-4 py-2 rounded-md hover:bg-sky-600 focus:outline-none focus:ring-2 focus:ring-sky-400">*/}
+        {/*      <FaRegEnvelope/>*/}
+        {/*      <span>Status</span>*/}
+        {/*    </button>*/}
 
-            {/* Filter Button */}
-            <button
-              className="flex items-center space-x-2 bg-sky-500 text-white px-4 py-2 rounded-md hover:bg-sky-600 focus:outline-none focus:ring-2 focus:ring-sky-400">
-              <IoFilter/>
-              <span>Filter</span>
-            </button>
-          </div>
-        </div>
+        {/*    /!* Filter Button *!/*/}
+        {/*    <button*/}
+        {/*      className="flex items-center space-x-2 bg-sky-500 text-white px-4 py-2 rounded-md hover:bg-sky-600 focus:outline-none focus:ring-2 focus:ring-sky-400">*/}
+        {/*      <IoFilter/>*/}
+        {/*      <span>Filter</span>*/}
+        {/*    </button>*/}
+        {/*  </div>*/}
+        {/*</div>*/}
 
-        {/* Table */}
-        <DataTable/>
+        {/*/!* Table *!/*/}
+        {/*<DataTable/>*/}
 
-        {/* Heading */}
-        <div className='flex flex-col items-center justify-center gap-2 py-4 border-2 border-gray-300 rounded-lg'>
-          <div className='flex flex-row items-center gap-4'>
-            <h6 className='text-md font-bold'>WP Moanalisa</h6>
-            <div>&#8226;</div>
-            <h6 className='text-md font-bold'>NPWP.XXX.XXX.XXX.3765</h6>
-          </div>
-          <h6 className='text-md'>Pembetulan SPT Tahunan</h6>
-          <h6 className='text-md'>No. 1264</h6>
-        </div>
+        {/*/!* Heading *!/*/}
+        {/*<div className='flex flex-col items-center justify-center gap-2 py-4 border-2 border-gray-300 rounded-lg'>*/}
+        {/*  <div className='flex flex-row items-center gap-4'>*/}
+        {/*    <h6 className='text-md font-bold'>WP Moanalisa</h6>*/}
+        {/*    <div>&#8226;</div>*/}
+        {/*    <h6 className='text-md font-bold'>NPWP.XXX.XXX.XXX.3765</h6>*/}
+        {/*  </div>*/}
+        {/*  <h6 className='text-md'>Pembetulan SPT Tahunan</h6>*/}
+        {/*  <h6 className='text-md'>No. 1264</h6>*/}
+        {/*</div>*/}
       </div>
     </MainLayout>
   );
