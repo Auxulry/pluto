@@ -50,12 +50,7 @@ const ScannerContainer = () => {
                   </ul>
                 </div>
                 <div className="flex gap-3">
-                  <button className="bg-gray-300 px-4 py-3 rounded">
-                    <IoEyeSharp />
-                  </button>
-                  <button className="bg-gray-300 px-4 py-3 rounded">
-                    <IoTrashBinSharp />
-                  </button>
+
                   <button
                     className="bg-gray-300 px-4 py-3 rounded"
                     onClick={() => toggleAccordion(item)}
