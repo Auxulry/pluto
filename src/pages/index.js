@@ -8,6 +8,7 @@ import OperatorDashboard from "@/components/organisms/operator/OperatorDashboard
 import ReviewerDashboard from "@/components/organisms/reviewer/ReviewerDashboard";
 import Modal from "@/components/atoms/modal/Modal";
 import TextField from "@/components/atoms/text-field/TextField";
+import Alert from "@/components/atoms/alert/Alert";
 
 const DataTable = () => {
   // State to toggle dropdown visibility
@@ -107,10 +108,24 @@ const DataTable = () => {
 
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false)
+  const [showAlert, setShowAlert] = useState(false)
+
+  const handleSubmit = () => {
+    setIsOpen(false)
+    setShowAlert(true)
+  }
 
   return (
     <MainLayout>
       <div className='container mx-auto'>
+        {showAlert && (
+          <Alert
+            type="success"
+            title="Success!"
+            message="Permintaan Box baru berhasil dikirim."
+            onClose={() => setShowAlert(false)}
+          />
+        )}
         <div className='flex flex-row items-center justify-between my-4'>
           <div>
             <h2 className="text-lg font-bold">Dashboard</h2>
@@ -139,6 +154,7 @@ export default function Home() {
           <div className='flex flex-row-reverse items-center gap-4'>
             <button
               className='px-4 py-2 rounded focus:outline-none font-medium bg-green-500 text-white hover:bg-green-600'
+              onClick={handleSubmit}
             >
               Submit
             </button>
