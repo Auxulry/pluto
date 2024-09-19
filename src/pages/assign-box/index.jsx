@@ -9,10 +9,12 @@ import ReviewerDashboard from "@/components/organisms/reviewer/ReviewerDashboard
 import TextField from "@/components/atoms/text-field/TextField";
 import Modal from "@/components/atoms/modal/Modal";
 import Alert from "@/components/atoms/alert/Alert";
+import {operators} from "@/mocks/assign-box";
 
 const DataTable = ({
   setOpen,
-  setSelectedActor
+  setSelectedActor,
+  items
 }) => {
   // State to toggle dropdown visibility
   const [dropdownOpen, setDropdownOpen] = useState(null);
@@ -60,14 +62,14 @@ const DataTable = ({
           </tr>
           </thead>
           <tbody>
-          {[1, 2].map((row, index) => (
+          {items.map((row, index) => (
             <tr key={index} className="border-b">
-              <td className="px-6 py-4 text-gray-700">{index + 1}</td>
-              <td className="px-6 py-4 text-gray-700">John Doe</td>
-              <td className="px-6 py-4 text-gray-700">250</td>
+              <td className="px-6 py-4 text-gray-700">{row.id}</td>
+              <td className="px-6 py-4 text-gray-700">{row.name}</td>
+              <td className="px-6 py-4 text-gray-700">{row.boxAssigned}</td>
               <td
                 className="px-6 py-4 text-gray-700 underline cursor-pointer"
-                onClick={() => handleModalClicked("John Doe")}
+                onClick={() => handleModalClicked(row.name)}
               >
                 Assign Box
               </td>
@@ -77,7 +79,7 @@ const DataTable = ({
         </table>
       </div>
       <div className="flex items-center justify-between mt-4">
-        <span className="text-gray-600 text-sm">Menampilkan 10 dari 1000 Kolom</span>
+        <span className="text-gray-600 text-sm">Menampilkan 10 dari 1 Kolom</span>
         <div className="flex space-x-1">
           <button className="px-3 py-1 border rounded-l bg-gray-200 text-gray-700">Sebelumnya</button>
           <button className="px-3 py-1 border bg-sky-500 text-white">1</button>
@@ -96,12 +98,24 @@ export default function AssignBox() {
   const [selectedActor, setSelectedActor] = useState('')
   const [showAlert, setShowAlert] = useState(false)
 
+  const [items, setItems] = useState(operators)
+
+  const [box, setBox] = useState(0)
 
   const handleSubmit = () => {
+    setItems((prevItems) =>
+      prevItems.map((op) =>
+        op.name === selectedActor
+          ? { ...op, boxAssigned: parseInt(op.boxAssigned) + parseInt(box) } // Update the correct operator
+          : op // Keep other operators unchanged
+      )
+    );
     setIsOpen(false)
     setSelectedActor('')
     setShowAlert(true)
   }
+
+
 
   return (
     <MainLayout>
@@ -151,6 +165,7 @@ export default function AssignBox() {
         <DataTable
           setOpen={setIsOpen}
           setSelectedActor={setSelectedActor}
+          items={items}
         />
 
         <Modal
@@ -168,6 +183,8 @@ export default function AssignBox() {
               type="number"
               label='Jumlah Box'
               placeholder='Input Jumlah Box'
+              value={box}
+              onChange={e => setBox(e.target.value)}
             />
           </div>
           <div className='flex flex-row-reverse items-center gap-4'>

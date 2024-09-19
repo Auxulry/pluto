@@ -1,10 +1,11 @@
-import MainLayout from "@/components/layouts/MainLayout";
-import React, { useState } from "react";
-import { IoChevronDownSharp, IoEyeSharp } from "react-icons/io5";
-import {boxScanner} from "@/mocks/scanner";
+import ListCompletesDocumentContainer from "@/containers/completesDocument/ListCompletesDocumentContainer";
+import React, {useState} from "react";
 import {useRouter} from "next/router";
+import MainLayout from "@/components/layouts/MainLayout";
+import {boxScanner} from "@/mocks/scanner";
+import {IoChevronDownSharp, IoEyeSharp} from "react-icons/io5";
 
-const ListCompletesDocumentContainer = () => {
+function ListCalculationDocument() {
   const [openAccordion, setOpenAccordion] = useState(null);
 
   const toggleAccordion = (item) => {
@@ -38,21 +39,24 @@ const ListCompletesDocumentContainer = () => {
         <div className="mt-8 flex flex-col gap-4">
           {boxScanner.docs.map((item, key) => (
             <div key={key} className={`flex gap-2 w-full justify-center  `}>
-              <IoEyeSharp
-                className="inline text-gray-400 mr-2 mt-4 cursor-pointer" size={24}
-                onClick={() => router.push(`/completes-document/${boxScanner.id}/document/${item.id}`)}
-              />
               <div className="flex flex-1 flex-col bg-white rounded-lg border-2 p-2">
                 <div className="flex items-center">
                   <div className="flex-grow flex flex-col gap-2">
                     <h2 className="text-lg font-semibold">{item.name} - NPWP {item.taxIdNumber}</h2>
                   </div>
-                  <div className="flex gap-3">
+                  <div className="flex gap-3 items-center flex-row">
+                    <button
+                      className=" px-4 py-3 rounded"
+                      onClick={() => router.push(`/tax-calculation/${boxScanner.id}/document/${item.id}`)}
+                    >
+                      <IoEyeSharp/>
+                    </button>
                     <button
                       className=" px-4 py-3 rounded"
                       onClick={() => toggleAccordion(item.id)}
                     >
-                      <IoChevronDownSharp className={`transform transition-transform duration-300 ${openAccordion === item.id ? 'rotate-180' : ''}`} />
+                      <IoChevronDownSharp
+                        className={`transform transition-transform duration-300 ${openAccordion === item.id ? 'rotate-180' : ''}`}/>
                     </button>
                   </div>
                 </div>
@@ -89,7 +93,6 @@ const ListCompletesDocumentContainer = () => {
 
     </MainLayout>
   )
-};
+}
 
-
-export default ListCompletesDocumentContainer;
+export default ListCalculationDocument;

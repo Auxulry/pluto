@@ -9,6 +9,7 @@ import ReviewerDashboard from "@/components/organisms/reviewer/ReviewerDashboard
 import Modal from "@/components/atoms/modal/Modal";
 import TextField from "@/components/atoms/text-field/TextField";
 import Alert from "@/components/atoms/alert/Alert";
+import Paper from "@/components/atoms/paper/Paper";
 
 const DataTable = () => {
   // State to toggle dropdown visibility
@@ -289,6 +290,11 @@ export default function Home() {
         {/*  <h6 className='text-md'>Pembetulan SPT Tahunan</h6>*/}
         {/*  <h6 className='text-md'>No. 1264</h6>*/}
         {/*</div>*/}
+        <div
+          className='flex flex-row items-center gap-4'
+        >
+          <Paper />
+        </div>
       </div>
     </MainLayout>
   );

@@ -5,7 +5,15 @@ export default function NavMenu() {
   const { pathname } = router;
 
   // Helper function to determine if the route is active
-  const isActive = (path) => pathname === path ? 'text-black' : 'text-gray-400';
+  // const isActive = (path) => pathname.split('/') === path ? 'text-black' : 'text-gray-400';
+
+  const isActive = (path) => {
+    if (pathname !== "/" && pathname !== "/") {
+      return pathname.includes(path) ? 'text-black' : 'text-gray-400';
+    } else {
+      return pathname === path ? 'text-black' : 'text-gray-400';
+    }
+  }
 
   return (
     <div className='flex flex-row items-center gap-4'>

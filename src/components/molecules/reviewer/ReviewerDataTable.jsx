@@ -20,9 +20,9 @@ export default function ReviewerDataTable({ items }) {
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
-        dropdownOpen !== null && // dropdown is open
-        dropdownRefs.current[dropdownOpen] && // ref exists
-        !dropdownRefs.current[dropdownOpen].contains(event.target) // clicked outside the dropdown
+        dropdownOpen !== null &&
+        dropdownRefs.current[dropdownOpen] &&
+        !dropdownRefs.current[dropdownOpen].contains(event.target)
       ) {
         setDropdownOpen(null);
       }
