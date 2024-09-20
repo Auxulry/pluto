@@ -10,6 +10,8 @@ import Modal from "@/components/atoms/modal/Modal";
 import TextField from "@/components/atoms/text-field/TextField";
 import Alert from "@/components/atoms/alert/Alert";
 import Paper from "@/components/atoms/paper/Paper";
+import {getStorage, setStorages} from "@/commons/storage";
+import {dataPluto} from "@/mocks/data";
 
 const DataTable = () => {
   // State to toggle dropdown visibility
@@ -115,6 +117,20 @@ export default function Home() {
     setIsOpen(false)
     setShowAlert(true)
   }
+
+  useEffect(() => {
+    if (window) {
+      const data = getStorage('__pluto_storage')
+      if (data === null) {
+        setStorages([
+          {
+            name: '__pluto_storage',
+            value: JSON.stringify(dataPluto)
+          }
+        ])
+      }
+    }
+  }, []);
 
   return (
     <MainLayout>
@@ -290,11 +306,11 @@ export default function Home() {
         {/*  <h6 className='text-md'>Pembetulan SPT Tahunan</h6>*/}
         {/*  <h6 className='text-md'>No. 1264</h6>*/}
         {/*</div>*/}
-        <div
-          className='flex flex-row items-center gap-4'
-        >
-          <Paper />
-        </div>
+        {/*<div*/}
+        {/*  className='flex flex-row items-center gap-4'*/}
+        {/*>*/}
+        {/*  <Paper />*/}
+        {/*</div>*/}
       </div>
     </MainLayout>
   );

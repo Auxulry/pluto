@@ -1,9 +1,10 @@
 import MainLayout from "@/components/layouts/MainLayout";
 import { IoChevronDownSharp, IoEyeSharp, IoScanSharp, IoTrashBinSharp } from "react-icons/io5";
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import Alert from "@/components/atoms/alert/Alert";
 import {boxScanner} from "@/mocks/scanner";
 import {useRouter} from "next/router";
+import {getStorage} from "@/commons/storage";
 
 const ScannerContainer = () => {
   const [openAccordion, setOpenAccordion] = useState(null);
@@ -15,6 +16,16 @@ const ScannerContainer = () => {
   const [showAlert, setShowAlert] = useState(true)
 
   const router = useRouter();
+
+  const [box, setBox] = useState({})
+
+  useEffect(() => {
+    if (window) {
+      const data = getStorage('__pluto_storage')
+      const serialize = JSON.parse(data)
+      setBox(serialize.boxScanner)
+    }
+  }, []);
 
   return (
     <MainLayout>
@@ -33,9 +44,9 @@ const ScannerContainer = () => {
               Pemindaian
             </h1>
             <ul className="list-disc flex gap-6">
-              <li className="list-none">{boxScanner.code}</li>
-              <li>{boxScanner.name}</li>
-              <li>{boxScanner.documentType}</li>
+              <li className="list-none">{box?.code}</li>
+              <li>{box?.name}</li>
+              <li>{box?.documentType}</li>
             </ul>
           </div>
           <button
@@ -46,8 +57,8 @@ const ScannerContainer = () => {
           </button>
         </div>
         <div className="mt-8 flex flex-col gap-4">
-          {boxScanner.docs.map((item) => (
-            <div key={item} className="flex flex-col bg-white rounded-lg border-2 p-4">
+          {box?.docs?.length > 0 && box?.docs?.map((item) => (
+            <div key={item.id} className="flex flex-col bg-white rounded-lg border-2 p-4">
               <div className="flex items-center">
                 <div className="w-20 flex flex-col gap-8 items-center justify-between h-full mr-4 border-r">
                   <span>No</span>

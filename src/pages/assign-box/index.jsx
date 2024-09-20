@@ -10,6 +10,7 @@ import TextField from "@/components/atoms/text-field/TextField";
 import Modal from "@/components/atoms/modal/Modal";
 import Alert from "@/components/atoms/alert/Alert";
 import {operators} from "@/mocks/assign-box";
+import {getStorage, setStorages} from "@/commons/storage";
 
 const DataTable = ({
   setOpen,
@@ -98,7 +99,7 @@ export default function AssignBox() {
   const [selectedActor, setSelectedActor] = useState('')
   const [showAlert, setShowAlert] = useState(false)
 
-  const [items, setItems] = useState(operators)
+  const [items, setItems] = useState([])
 
   const [box, setBox] = useState(0)
 
@@ -115,7 +116,29 @@ export default function AssignBox() {
     setShowAlert(true)
   }
 
+  useEffect(() => {
+    if (window) {
+      const data = getStorage('__pluto_storage')
+      const serialize = JSON.parse(data)
+      setItems(serialize.operators)
+    }
+  }, []);
 
+
+  useEffect(() => {
+    if (items.length > 0) {
+      const data = getStorage('__pluto_storage')
+      const serialize = JSON.parse(data)
+      serialize.operators = items
+
+      setStorages([
+        {
+          name: '__pluto_storage',
+          value: JSON.stringify(serialize),
+        }
+      ])
+    }
+  }, [items]);
 
   return (
     <MainLayout>

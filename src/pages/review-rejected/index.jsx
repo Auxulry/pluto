@@ -1,162 +1,111 @@
-import {IoIosQrScanner, IoMdArrowDropdown, IoMdNotifications} from "react-icons/io";
-import {MdOutlineArrowOutward, MdOutlineKeyboardArrowDown, MdOutlineKeyboardArrowUp} from "react-icons/md";
-import React, {useEffect, useRef, useState} from "react";
-import {IoAddCircleOutline, IoEye, IoFilter, IoFilterOutline, IoPencil, IoTrashSharp} from "react-icons/io5";
-import {FaFilter, FaRegEnvelope, FaSearch} from "react-icons/fa";
+import ListCompletesDocumentContainer from "@/containers/completesDocument/ListCompletesDocumentContainer";
+import React, {useEffect, useState} from "react";
+import {useRouter} from "next/router";
 import MainLayout from "@/components/layouts/MainLayout";
-import OperatorDashboard from "@/components/organisms/operator/OperatorDashboard";
-import ReviewerDashboard from "@/components/organisms/reviewer/ReviewerDashboard";
-import Modal from "@/components/atoms/modal/Modal";
-import TextField from "@/components/atoms/text-field/TextField";
-import Alert from "@/components/atoms/alert/Alert";
+import {boxScanner} from "@/mocks/scanner";
+import {IoChevronDownSharp, IoEyeSharp, IoTrash} from "react-icons/io5";
+import {getStorage} from "@/commons/storage";
+import {rejectOptions} from "@/mocks/reason";
+import {IoIosQrScanner} from "react-icons/io";
 
-const DataTable = () => {
-  // State to toggle dropdown visibility
-  const [dropdownOpen, setDropdownOpen] = useState(null);
+function ListExtractionDocument() {
+  const [openAccordion, setOpenAccordion] = useState(null);
 
-  // Ref to capture the element for dropdown
-  const dropdownRefs = useRef([]);
-
-  const handleToggle = (index) => {
-    setDropdownOpen(dropdownOpen === index ? null : index);
+  const toggleAccordion = (item) => {
+    setOpenAccordion(openAccordion === item ? null : item);
   };
 
-  // Close dropdown when clicking outside
+  const router = useRouter();
+
+  const [box, setBox] = useState({})
+
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        dropdownOpen !== null && // dropdown is open
-        dropdownRefs.current[dropdownOpen] && // ref exists
-        !dropdownRefs.current[dropdownOpen].contains(event.target) // clicked outside the dropdown
-      ) {
-        setDropdownOpen(null);
-      }
-    };
+    if (window) {
+      const data = getStorage('__pluto_storage')
+      const serialize = JSON.parse(data)
+      setBox(serialize.boxScanner)
+    }
+  }, []);
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [dropdownOpen]);
-
-  return (
-    <div className="container mx-auto">
-      <div className="overflow-x-auto bg-white">
-        <table className="min-w-full bg-white">
-          <thead className="bg-gray-100 rounded-lg">
-          <tr>
-            <th className="px-6 py-3 text-left text-gray-600">No. Box</th>
-            <th className="px-6 py-3 text-left text-gray-600">Barcode</th>
-            <th className="px-6 py-3 text-left text-gray-600">WP Name</th>
-            <th className="px-6 py-3 text-left text-gray-600">NPWP</th>
-            <th className="px-6 py-3 text-left text-gray-600">Rejected By</th>
-            <th className="px-6 py-3 text-left text-gray-600">Reason Rejected</th>
-            <th className="px-6 py-3"></th>
-          </tr>
-          </thead>
-          <tbody>
-          {[1, 2, 3, 4, 5].map((row, index) => (
-            <tr key={index} className="border-b">
-              <td className="px-6 py-4 text-gray-700">No.1247</td>
-              <td className="px-6 py-4 text-gray-700">124735</td>
-              <td className="px-6 py-4 text-gray-700">John Doe</td>
-              <td className="px-6 py-4 text-gray-700">3847.3836.1736.3319</td>
-              <td className="px-6 py-4 text-gray-700">John Doe</td>
-              <td className="px-6 py-4 text-gray-700">Rejected di kelengkapan dokumen</td>
-              <td className="px-6 py-4 text-right relative">
-                {/* Ellipsis Button */}
-                <button
-                  onClick={() => handleToggle(index)}
-                  className="text-gray-400 hover:text-gray-600"
-                >
-                  ⋮
-                </button>
-
-                {/* Dropdown Menu */}
-                {dropdownOpen === index && (
-                  <div
-                    ref={(el) => (dropdownRefs.current[index] = el)} // Set ref for each dropdown
-                    className="absolute right-0 mt-2 w-56 bg-white border rounded shadow-lg z-10 text-start"
-                  >
-                    <ul>
-                      <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer flex flex-row items-center gap-2">
-                        <IoIosQrScanner />
-                        <span>Re-scan Document</span>
-                      </li>
-                      <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer flex flex-row items-center gap-2">
-                        <IoPencil />
-                        <span>Re-scan Document</span>
-                      </li>
-                      <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer flex flex-row items-center gap-2">
-                        <IoTrashSharp />
-                        <span>Reject</span>
-                      </li>
-                    </ul>
-                  </div>
-                )}
-              </td>
-            </tr>
-          ))}
-          </tbody>
-        </table>
-      </div>
-      <div className="flex items-center justify-between mt-4">
-        <span className="text-gray-600 text-sm">Menampilkan 10 dari 1000 Kolom</span>
-        <div className="flex space-x-1">
-          <button className="px-3 py-1 border rounded-l bg-gray-200 text-gray-700">Sebelumnya</button>
-          <button className="px-3 py-1 border bg-sky-500 text-white">1</button>
-          <button className="px-3 py-1 border bg-gray-200 text-gray-700">2</button>
-          <button className="px-3 py-1 border bg-gray-200 text-gray-700">...</button>
-          <button className="px-3 py-1 border bg-gray-200 text-gray-700">10</button>
-          <button className="px-3 py-1 border rounded-r bg-gray-200 text-gray-700">Selanjutnya</button>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default function ReviewRejected() {
   return (
     <MainLayout>
-      <div className='container mx-auto'>
-        <div className='flex flex-row items-center justify-between my-4'>
+
+      <div className="container mx-auto ">
+        <div className="w-full flex justify-between">
           <div>
-            <h2 className="text-lg font-bold">Rejected</h2>
-            <p className='text-md'>All the files you have rejected go into the bin</p>
-          </div>
-        </div>
-        {/* Filter */}
-        <div className="flex items-center justify-between py-4">
-          {/* Search Input */}
-          <div className="relative w-full">
-            <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"/>
-            <input
-              type="text"
-              placeholder="Search here..."
-              className="pl-10 pr-4 py-2 border rounded-lg text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-400 w-1/3"
-            />
-          </div>
-
-          <div className='flex flex-row items-center gap-4'>
-            {/* Status Button */}
-            <button
-              className="flex items-center space-x-2 bg-white-500 border-black border-2 text-black px-4 py-2 rounded-md hover:bg-white-600 focus:outline-none focus:ring-2 focus:ring-white-400">
-              <FaRegEnvelope/>
-              <span>Status</span>
-            </button>
-
-            {/* Filter Button */}
-            <button
-              className="flex items-center space-x-2 bg-white-500 border-black border-2 text-black px-4 py-2 rounded-md hover:bg-white-600 focus:outline-none focus:ring-2 focus:ring-white-400">
-              <IoFilter/>
-              <span>Filter</span>
-            </button>
+            <h1 className="font-semibold text-xl">
+              Rejected
+            </h1>
+            <h6 className='text-sm'>All the files you have rejected go into the bin.</h6>
           </div>
         </div>
 
-        {/* Table */}
-        <DataTable/>
+        <div className="mt-8 flex flex-col gap-4">
+          {box?.docs?.length > 0 && box?.docs?.filter((e) => e.rejectedReason.option !== "").map((item) => (
+            <div key={item.id} className="flex flex-col bg-white rounded-lg border-2 p-4">
+              <div className="flex items-center">
+                <div className="w-20 flex flex-col gap-8 items-center justify-between h-full mr-4 border-r">
+                  <span>No</span>
+                  <h1 className="text-xl font-bold">{item.id}</h1>
+                </div>
+                <div className="flex-grow flex flex-col gap-2">
+                  <h2 className="text-gray-500">{item.code}</h2>
+                  <ul className="list-disc flex gap-6 text-lg font-semibold">
+                    <li className="list-none">{item.name}</li>
+                    {item.rejectedReason.option !== "" && (
+                      <li>
+                        <div className='flex flex-row items-center justify-between w-full gap-8'>
+                          <h6 className='font-semibold'>NPWP {item.taxIdNumber}</h6>
+                          <h6 className='text-red-500 text-sm italic'>{item.rejectedReason.text }</h6>
+                        </div>
+                      </li>
+                    )}
+                    {item.rejectedReason.option === "" && (
+                      <li>NPWP {item.taxIdNumber}</li>
+                    )}
+                  </ul>
+                  <ul className="list-disc flex gap-6">
+                    <li className="list-none">{item.attachments.length} Dokumen</li>
+                  </ul>
+                </div>
+                <div className="flex gap-3">
+                  <button
+                    className="bg-gray-300 px-4 py-3 rounded"
+                  >
+                    <IoIosQrScanner/>
+                  </button>
+                  <button
+                    className="bg-gray-300 px-4 py-3 rounded"
+                  >
+                    <IoTrash/>
+                  </button>
+                  <button
+                    className="bg-gray-300 px-4 py-3 rounded"
+                    onClick={() => toggleAccordion(item.id)}
+                  >
+                    <IoChevronDownSharp
+                      className={`transform transition-transform duration-300 ${openAccordion === item.id ? 'rotate-180' : ''}`}/>
+                  </button>
+                </div>
+              </div>
+              <div
+                className={`mt-4 overflow-hidden transition-max-height duration-300 ease-in-out ${openAccordion === item.id ? 'max-h-96' : 'max-h-0'
+                }`}
+              >
+                <ul className="pl-8 space-y-2">
+                  {item.attachments.map((attachment, index) => (
+                    <li key={index}>
+                      <span>{attachment.label}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </MainLayout>
-  );
+  )
 }
+
+export default ListExtractionDocument;

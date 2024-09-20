@@ -4,6 +4,8 @@ import {IoArrowBack} from "react-icons/io5";
 import {useRouter} from "next/router";
 import {boxScanner} from "@/mocks/scanner";
 import Modal from "@/components/atoms/modal/Modal";
+import {getStorage, setStorages} from "@/commons/storage";
+import {rejectOptions} from "@/mocks/reason";
 
 export default function ScannerPreview() {
   const router = useRouter();
@@ -14,13 +16,49 @@ export default function ScannerPreview() {
 
   const [attachments, setAttachments] = useState([])
   const [document, setDocument] = useState({})
+
+  const [text, setText] = useState('')
+
   useEffect(() => {
-    setDocument(boxScanner.docs.find((doc) => doc.id === parseInt(router.query.id)))
-    setAttachments(boxScanner.docs.find((doc) => doc.id === parseInt(router.query.id))?.attachments || [])
+    if (window) {
+      const data = getStorage('__pluto_storage')
+      const serialize = JSON.parse(data)
+
+      setDocument(serialize.boxScanner.docs.find((doc) => doc.id === parseInt(router.query.id)))
+      setAttachments(serialize.boxScanner.docs.find((doc) => doc.id === parseInt(router.query.id))?.attachments || [])
+    }
   }, [router.query]);
 
   const handleSelectChange = (e) => {
     setSelectedReason(e.target.value)
+  }
+
+  const handleChangeText = (e) => {
+    setText(e.target.value)
+  }
+
+  const handleReject = () => {
+    const data = getStorage('__pluto_storage')
+    const serialize = JSON.parse(data)
+    const docs = serialize.boxScanner.docs.find((doc) => doc.id === parseInt(router.query.id))
+    docs.rejectedReason = {
+      option: selectedReason,
+      text: selectedReason !== '5' ? rejectOptions.find((e) => e.value === selectedReason).label : text
+    }
+
+    serialize.boxScanner.docs = [
+      ...serialize.boxScanner.docs.filter((doc) => doc.id !== parseInt(router.query.id)),
+      docs
+    ]
+
+    setStorages([
+      {
+        name: "__pluto_storage",
+        value: JSON.stringify(serialize),
+      }
+    ])
+
+    setIsOpen(false)
   }
 
   return (
@@ -89,22 +127,23 @@ export default function ScannerPreview() {
               className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent"
             >
               <option value="">Select Reason</option>
-              <option value="0">Informasi tidak lengkap.</option>
-              <option value="1">Terdapat kesalahan penulisan.</option>
-              <option value="2">Terdapat kesalahan perhitungan.</option>
-              <option value="3">Format dokumen tidak sesuai.</option>
-              <option value="4">Tanda tangan tidak sah.</option>
-              <option value="5">Other.</option>
+              {rejectOptions.map((option) => (
+                <option key={option.label} value={option.value}>{option.label}</option>
+              ))}
             </select>
-            <textarea
-              placeholder="Enter your message..."
-              className="w-full h-40 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent resize-none"
-            />
+            {selectedReason === "5" && (
+              <textarea
+                placeholder="Enter your message..."
+                className="w-full h-40 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent resize-none"
+                value={text}
+                onChange={handleChangeText}
+              />
+            )}
           </div>
           <div className='flex flex-row-reverse items-center gap-4 mt-4'>
             <button
               className='px-4 py-2 rounded focus:outline-none font-medium bg-red-500 text-white hover:bg-red-600'
-
+              onClick={handleReject}
             >
               Reject
             </button>

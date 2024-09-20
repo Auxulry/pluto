@@ -1,9 +1,11 @@
 import ListCompletesDocumentContainer from "@/containers/completesDocument/ListCompletesDocumentContainer";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useRouter} from "next/router";
 import MainLayout from "@/components/layouts/MainLayout";
 import {boxScanner} from "@/mocks/scanner";
 import {IoChevronDownSharp, IoEyeSharp} from "react-icons/io5";
+import {getStorage} from "@/commons/storage";
+import {rejectOptions} from "@/mocks/reason";
 
 function ListCalculationDocument() {
   const [openAccordion, setOpenAccordion] = useState(null);
@@ -13,6 +15,16 @@ function ListCalculationDocument() {
   };
 
   const router = useRouter();
+
+  const [box, setBox] = useState({})
+
+  useEffect(() => {
+    if (window) {
+      const data = getStorage('__pluto_storage')
+      const serialize = JSON.parse(data)
+      setBox(serialize.boxScanner)
+    }
+  }, []);
 
   return (
     <MainLayout>
@@ -24,66 +36,75 @@ function ListCalculationDocument() {
               List Document
             </h1>
             <ul className="list-disc flex gap-6">
-              <li className="list-none">{boxScanner.code}</li>
-              <li>{boxScanner.name}</li>
-              <li>{boxScanner.documentType}</li>
+              <li className="list-none">{box?.code}</li>
+              <li>{box?.name}</li>
+              <li>{box?.documentType}</li>
             </ul>
           </div>
-          <button
-            className="bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-600 flex flex-row items-center gap-2 cursor-pointer"
-          >
-            <span>Submit</span>
-          </button>
         </div>
 
         <div className="mt-8 flex flex-col gap-4">
-          {boxScanner.docs.map((item, key) => (
-            <div key={key} className={`flex gap-2 w-full justify-center  `}>
-              <div className="flex flex-1 flex-col bg-white rounded-lg border-2 p-2">
-                <div className="flex items-center">
-                  <div className="flex-grow flex flex-col gap-2">
-                    <h2 className="text-lg font-semibold">{item.name} - NPWP {item.taxIdNumber}</h2>
-                  </div>
-                  <div className="flex gap-3 items-center flex-row">
-                    <button
-                      className=" px-4 py-3 rounded"
-                      onClick={() => router.push(`/tax-calculation/${boxScanner.id}/document/${item.id}`)}
-                    >
-                      <IoEyeSharp/>
-                    </button>
-                    <button
-                      className=" px-4 py-3 rounded"
-                      onClick={() => toggleAccordion(item.id)}
-                    >
-                      <IoChevronDownSharp
-                        className={`transform transition-transform duration-300 ${openAccordion === item.id ? 'rotate-180' : ''}`}/>
-                    </button>
-                  </div>
+          {box?.docs?.length > 0 && box?.docs?.map((item) => (
+            <div key={item.id} className="flex flex-col bg-white rounded-lg border-2 p-4">
+              <div className="flex items-center">
+                <div className="w-20 flex flex-col gap-8 items-center justify-between h-full mr-4 border-r">
+                  <span>No</span>
+                  <h1 className="text-xl font-bold">{item.id}</h1>
                 </div>
-                <div
-                  className={`overflow-hidden transition-max-height duration-300 ease-in-out ${openAccordion === item.id ? 'max-h-96' : 'max-h-0'
-                  }`}
-                >
-                  <div className="flex justify-end space-x-4">
-                    <button
-                      className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-400 transition duration-300"
-                    >
-                      Reject
-                    </button>
-                    <button
-                      className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition duration-300"
-                    >
-                      Approve
-                    </button>
-                  </div>
-                  <ul className="pl-8 space-y-2">
-                    {item.attachments.map((attachment, index) => (
-                      <li key={index}>
-                        <span>{attachment.label}</span>
+                <div className="flex-grow flex flex-col gap-2">
+                  <h2 className="text-gray-500">{item.code}</h2>
+                  <ul className="list-disc flex gap-6 text-lg font-semibold">
+                    <li className="list-none">{item.name}</li>
+                    {item.rejectedReason.option !== "" && (
+                      <li>
+                        <div className='flex flex-row items-center justify-between w-full gap-8'>
+                          <h6 className='font-semibold'>NPWP {item.taxIdNumber}</h6>
+                          <h6
+                            className='text-red-500 text-sm italic'>{item.rejectedReason.text}</h6>
+                        </div>
                       </li>
-                    ))}
+                    )}
+                    {item.rejectedReason.option === "" && (
+                      <li>
+                        <div className='flex flex-row items-center justify-between w-full gap-8'>
+                          <h6 className='font-semibold'>NPWP {item.taxIdNumber}</h6>
+                          <h6
+                            className='text-green-500 text-sm italic'>Perhitungan valid.</h6>
+                        </div>
+                      </li>
+                    )}
+                  </ul>
+                  <ul className="list-disc flex gap-6">
+                    <li className="list-none">{item.attachments.length} Dokumen</li>
                   </ul>
                 </div>
+                <div className="flex gap-3">
+                  <button
+                    className="bg-gray-300 px-4 py-3 rounded"
+                    onClick={() => router.push(`/tax-calculation/${box?.id}/document/${item.id}`)}
+                  >
+                    <IoEyeSharp/>
+                  </button>
+                  <button
+                    className="bg-gray-300 px-4 py-3 rounded"
+                    onClick={() => toggleAccordion(item.id)}
+                  >
+                    <IoChevronDownSharp
+                      className={`transform transition-transform duration-300 ${openAccordion === item.id ? 'rotate-180' : ''}`}/>
+                  </button>
+                </div>
+              </div>
+              <div
+                className={`mt-4 overflow-hidden transition-max-height duration-300 ease-in-out ${openAccordion === item.id ? 'max-h-96' : 'max-h-0'
+                }`}
+              >
+                <ul className="pl-8 space-y-2">
+                  {item.attachments.map((attachment, index) => (
+                    <li key={index}>
+                      <span>{attachment.label}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
           ))}
