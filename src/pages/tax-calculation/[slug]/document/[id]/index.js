@@ -1,6 +1,6 @@
 import MainLayout from "@/components/layouts/MainLayout";
 import React, {useEffect, useState} from "react";
-import {IoArrowBack} from "react-icons/io5";
+import {IoArrowBack, IoChevronDownSharp} from "react-icons/io5";
 import {useRouter} from "next/router";
 import {boxScanner} from "@/mocks/scanner";
 import Modal from "@/components/atoms/modal/Modal";
@@ -8,6 +8,11 @@ import {getStorage, setStorages} from "@/commons/storage";
 import {rejectOptions} from "@/mocks/reason";
 
 export default function ScannerPreview() {
+  const [openAccordion, setOpenAccordion] = useState(null);
+
+  const toggleAccordion = (item) => {
+    setOpenAccordion(openAccordion === item ? null : item);
+  };
   const router = useRouter();
 
   const [selectedReason, setSelectedReason] = useState("")
@@ -18,6 +23,19 @@ export default function ScannerPreview() {
   const [document, setDocument] = useState({})
 
   const [text, setText] = useState('')
+
+  const [selectedAttachment, setSelectedAttachment] = useState([])
+
+  const handleSelectAttachment = (item) => {
+    if (selectedAttachment.includes(item)) {
+      setSelectedAttachment(selectedAttachment.filter((e) => e !== item))
+    } else {
+      setSelectedAttachment([
+        ...selectedAttachment,
+        item
+      ])
+    }
+  }
 
   useEffect(() => {
     if (window) {
@@ -61,6 +79,11 @@ export default function ScannerPreview() {
     setIsOpen(false)
   }
 
+  const isAttachmentActive = (label) => {
+    return selectedAttachment.includes(label)
+  }
+
+
   return (
     <MainLayout>
       <div className="container mx-auto ">
@@ -76,31 +99,55 @@ export default function ScannerPreview() {
           <h6 className='text-md'>Pembetulan SPT Tahunan</h6>
           <h6 className='text-md'>{document?.code}</h6>
         </div>
-        {attachments.map((attachment, key) => (
-          <div key={key} className='flex flex-col gap-4 my-4'>
-            <h6 className='text-lg font-bold text-center'>{attachment.label}</h6>
-            <div className='flex flex-row gap-2 items-center'>
-              <div className='flex flex-col'>
-                <h6 className='text-md'>Hasil Pindai</h6>
-                <div className="relative w-full h-auto">
-                  <img
-                    src={attachment.src}
-                    alt={`image-${key}`}
-                    className="w-full h-auto object-cover shadow-md"
-                  />
-                  <div className="absolute inset-0 bg-gray-500 opacity-50"></div>
+        <div className="flex flex-col gap-4 my-4">
+          {attachments.map((attachment, key) => (
+            <div key={key} className="flex flex-col bg-white rounded-lg border-2 p-4">
+              <div className="flex items-center w-full">
+                <div className='font-bold text-xl w-full'>{attachment?.label}</div>
+                <div className="flex gap-3">
+                  <button
+                    className="bg-gray-300 px-4 py-3 rounded"
+                    onClick={() => toggleAccordion(attachment?.label)}
+                  >
+                    <IoChevronDownSharp
+                      className={`transform transition-transform duration-300 ${openAccordion === attachment?.label ? 'rotate-180' : ''}`}/>
+                  </button>
                 </div>
               </div>
-              <div className='flex flex-col'>
-                <h6 className='text-md'>Hasil Baca</h6>
-                <div className="w-full h-auto">
-                  <img src={attachment.src} alt={`image-${key}`} className="w-full h-auto object-cover shadow-md"/>
+              <div
+                className={`mt-4 overflow-hidden transition-max-height duration-300 ease-in-out ${openAccordion === attachment?.label ? 'max-h-200' : 'max-h-0'}`}
+              >
+                <div className='flex flex-row gap-2 items-center'>
+                  <div className='flex flex-col'>
+                    <h6 className='text-md'>Hasil Pindai</h6>
+                    <div className="relative w-full h-auto">
+                      <img
+                        src={attachment.src}
+                        alt={`image-${key}`}
+                        className="w-full h-auto object-cover shadow-md"
+                      />
+                      <div className="absolute inset-0 bg-gray-500 opacity-50"></div>
+                    </div>
+                  </div>
+                  <div className='flex flex-col'>
+                    <h6 className='text-md'>Hasil Baca</h6>
+                    <div className="w-full h-auto">
+                      <img src={attachment.src} alt={`image-${key}`} className="w-full h-auto object-cover shadow-md"/>
+                    </div>
+                  </div>
+                  {isAttachmentActive(attachment?.label) && (
+                    <div className='border-slim w-[20px] h-[20px] cursor-pointer text-center'
+                         onClick={() => handleSelectAttachment(attachment?.label)}>X</div>
+                  )}
+                  {!isAttachmentActive(attachment?.label) && (
+                    <div className='border-slim w-[20px] h-[20px] cursor-pointer'
+                         onClick={() => handleSelectAttachment(attachment?.label)}></div>
+                  )}
                 </div>
               </div>
-              <div className='border-slim w-[20px] h-[20px]'></div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
         <div className="flex justify-end space-x-4">
           <button
             className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-400 transition duration-300"

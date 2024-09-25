@@ -6,6 +6,7 @@ import {boxScanner} from "@/mocks/scanner";
 import Modal from "@/components/atoms/modal/Modal";
 import {rejectOptions} from "@/mocks/reason";
 import {getStorage, setStorages} from "@/commons/storage";
+import Select from "@/components/atoms/select/Select";
 
 export default function ScannerPreview() {
   const router = useRouter();
@@ -61,6 +62,36 @@ export default function ScannerPreview() {
     setIsOpen(false)
   }
 
+  const handleLabelChange = (e, prev) => {
+    const data = getStorage('__pluto_storage')
+    const serialize = JSON.parse(data)
+    const docs = serialize.boxScanner.docs.find((doc) => doc.id === parseInt(router.query.id))
+
+    const attachment = docs.attachments.find((el) => el.label === prev)
+
+    docs.attachments = [
+      ...docs.attachments.filter((el) => el.label !== prev),
+      {
+        src: attachment?.src,
+        label: e.target.value,
+      }
+    ]
+
+    serialize.boxScanner.docs = [
+      ...serialize.boxScanner.docs.filter((doc) => doc.id !== parseInt(router.query.id)),
+      docs
+    ]
+
+    setStorages([
+      {
+        name: "__pluto_storage",
+        value: JSON.stringify(serialize),
+      }
+    ])
+
+    setAttachments(serialize.boxScanner.docs.find((doc) => doc.id === parseInt(router.query.id))?.attachments || [])
+  }
+
   return (
     <MainLayout>
       <div className="container mx-auto ">
@@ -79,24 +110,35 @@ export default function ScannerPreview() {
         <div className="grid grid-cols-2 gap-4 p-4">
           {attachments.map((attachment, key) => (
             <div key={key} className="w-full h-auto flex flex-col">
-              <h6 className='text-lg w-full text-center'>{attachment.label}</h6>
+              <Select
+                options={[
+                  { label: 'Form 1770 S', value: 'Form 1770 S' },
+                  { label: 'Lampiran 1', value: 'Lampiran 1' }, // Existing label from attachments
+                  { label: 'Lampiran 2', value: 'Lampiran 2' },
+                  { label: 'Perhitungan PH MT', value: 'Perhitungan PH MT' },
+                  { label: 'Laporan Keuangan', value: 'Laporan Keuangan' },
+                  { label: 'Lainya', value: 'Lainya' },
+                ]}
+                value={attachment?.label}
+                onChange={(e) => handleLabelChange(e, attachment?.label)}
+              />
               <img src={attachment.src} alt={`image-${key}`} className="w-full h-auto object-cover shadow-md"/>
             </div>
           ))}
         </div>
-        <div className="flex justify-end space-x-4">
-          <button
-            className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-400 transition duration-300"
-            onClick={() => setIsOpen(true)}
-          >
-            Reject
-          </button>
-          <button
-            className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition duration-300"
-          >
-            Submit
-          </button>
-        </div>
+        {/*<div className="flex justify-end space-x-4">*/}
+        {/*  <button*/}
+        {/*    className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-400 transition duration-300"*/}
+        {/*    onClick={() => setIsOpen(true)}*/}
+        {/*  >*/}
+        {/*    Reject*/}
+        {/*  </button>*/}
+        {/*  <button*/}
+        {/*    className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition duration-300"*/}
+        {/*  >*/}
+        {/*    Submit*/}
+        {/*  </button>*/}
+        {/*</div>*/}
         <Modal
           isOpen={isOpen}
           onClose={() => setIsOpen(false)}
