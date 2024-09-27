@@ -61,7 +61,8 @@ export default function ScannerPreview() {
     const docs = serialize.boxScanner.docs.find((doc) => doc.id === parseInt(router.query.id))
     docs.rejectedReason = {
       option: selectedReason,
-      text: selectedReason !== '5' ? rejectOptions.find((e) => e.value === selectedReason).label : text
+      text: selectedReason !== '5' ? rejectOptions.find((e) => e.value === selectedReason).label : text,
+      state: 'Extraction Data'
     }
 
     serialize.boxScanner.docs = [
@@ -77,6 +78,7 @@ export default function ScannerPreview() {
     ])
 
     setIsOpen(false)
+    router.push(`/extraction/${router.query?.slug}`)
   }
 
   const isAttachmentActive = (label) => {
@@ -99,7 +101,7 @@ export default function ScannerPreview() {
           <h6 className='text-md'>{document?.code}</h6>
         </div>
         <div className="flex flex-col gap-4 my-4">
-          {attachments.map((attachment, key) => (
+          {attachments.filter((e) => e.src !== "").map((attachment, key) => (
             <div key={key} className="flex flex-col bg-white rounded-lg border-2 p-4">
               <div className="flex items-center w-full">
                 <div className='font-bold text-xl w-full'>{attachment?.label}</div>
@@ -156,6 +158,7 @@ export default function ScannerPreview() {
           </button>
           <button
             className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition duration-300"
+            onClick={() => router.push(`/extraction/${router.query?.slug}`)}
           >
             Submit
           </button>

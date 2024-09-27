@@ -38,6 +38,7 @@ const ExtractionContainer = () => {
                 <li className="list-none">{box?.docs?.length} WP</li>
                 <li>{box?.documentType}</li>
               </ul>
+              <h3 className='text-md text-red-500 italic'>Terdapat 3 WP yang dokumennya berpotensi tidak valid.</h3>
             </div>
 
             <div className="flex gap-3">

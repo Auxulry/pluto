@@ -392,7 +392,7 @@ export default function Paper() {
                 </div>
               </div>
             </div>
-            <div className='flex flex-row items-center'>
+            <div className='flex flex-row items-center border-b border-black'>
               <p
                 className='[writing-mode:vertical-lr] rotate-180 text-[8pt] font-bold px-1 py-1 text-center text-wrap border-super-slim-l'>
                 KENA PAJAK <br/> B. PENGHASILAN
@@ -434,12 +434,66 @@ export default function Paper() {
                     <h6 className='text-[8pt]'>8</h6>
                     <div className='flex flex-col'>
                       <h6 className='text-[8pt]'>
-                        PENGHASILAN KENA PAJAK (6-7) &nbsp;&nbsp;&nbsp;&nbsp;............................................................................................................................
+                        PENGHASILAN KENA PAJAK
+                        (6-7) &nbsp;&nbsp;&nbsp;&nbsp;............................................................................................................................
                       </h6>
                     </div>
                   </div>
                   <div className='flex flex-row'>
                     <div className='border-2 border-black w-[20px] h-[30px] text-center'>8</div>
+                    <div className='border-super-slim-t border-super-slim-b w-[231px] h-[30px] text-center'></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className='flex flex-row items-center border-b border-black'>
+              <p
+                className='[writing-mode:vertical-lr] rotate-180 text-[8pt] font-bold px-3 text-center'>
+                C. PPh TERUTANG
+              </p>
+              <div className='w-full min-w-[589px] border-super-slim-l flex flex-col gap-0.5'>
+                <div className='flex flex-row items-center gap-1'>
+                  <div className='flex flex-row items-start gap-2 pl-2 pt-2 pr-2 w-[583.59px]'>
+                    <h6 className='text-[8pt]'>9</h6>
+                    <div className='flex flex-col'>
+                      <h6 className='text-[8pt]'>
+                        PPh TERUTANG (TARIF PASAL 17 UU PPh x ANGKA 8) &nbsp;&nbsp;&nbsp;&nbsp;....................................................
+                      </h6>
+                      <h5 className='text-[6pt]'>
+                        [Bagi Wajib Pajak dengan status PH atau MT diisi dari Lampiran Perhitungan PPh Terutang sebagaimana dimaksud dalam bagian G: Lampiran huruf d]
+                      </h5>
+                    </div>
+                  </div>
+                  <div className='flex flex-row'>
+                    <div className='border-2 border-black w-[20px] h-[30px] text-center'>9</div>
+                    <div className='border-super-slim-t border-super-slim-b w-[231px] h-[30px] text-center'></div>
+                  </div>
+                </div>
+                <div className='flex flex-row items-center gap-1'>
+                  <div className='flex flex-row items-start gap-2 pl-2 py-1 pr-2 w-[583.59px]'>
+                    <h6 className='text-[8pt]'>10</h6>
+                    <div className='flex flex-col'>
+                      <h6 className='text-[8pt]'>
+                        PENGEMBALIAN / PENGURANGAN PPh PASAL 24 YANG TELAH DIKREDITKAN &nbsp;&nbsp;&nbsp;&nbsp;....................................
+                      </h6>
+                    </div>
+                  </div>
+                  <div className='flex flex-row'>
+                    <div className='border-2 border-black w-[20px] h-[30px] text-center'>10</div>
+                    <div className='border-super-slim-t border-super-slim-b w-[231px] h-[30px] text-center'></div>
+                  </div>
+                </div>
+                <div className='flex flex-row items-center gap-1'>
+                  <div className='flex flex-row items-start gap-2 pl-2 py-1 pr-2 w-[583.59px]'>
+                    <h6 className='text-[8pt]'>11</h6>
+                    <div className='flex flex-col'>
+                      <h6 className='text-[8pt]'>
+                        JUMLAH PPh TERUTANG (9+10) &nbsp;&nbsp;&nbsp;&nbsp;..................................................................................
+                      </h6>
+                    </div>
+                  </div>
+                  <div className='flex flex-row'>
+                    <div className='border-2 border-black w-[20px] h-[30px] text-center'>11</div>
                     <div className='border-super-slim-t border-super-slim-b w-[231px] h-[30px] text-center'></div>
                   </div>
                 </div>
