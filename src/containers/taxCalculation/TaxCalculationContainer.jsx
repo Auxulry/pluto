@@ -39,7 +39,7 @@ const TaxCalculationContainer = () => {
                 <li className="list-none">{box?.docs?.length} WP</li>
                 <li>{box?.documentType}</li>
               </ul>
-              <h3 className='text-md text-red-500 italic'>Terdapat 3 WP dengan perhitungan paja yang tidak benar.</h3>
+              <h3 className='text-md text-red-500 italic'>Terdapat 1 WP dengan perhitungan pajak yang tidak benar.</h3>
             </div>
 
             <div className="flex gap-3">

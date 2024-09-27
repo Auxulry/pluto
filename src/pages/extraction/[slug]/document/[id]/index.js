@@ -104,7 +104,17 @@ export default function ScannerPreview() {
           {attachments.filter((e) => e.src !== "").map((attachment, key) => (
             <div key={key} className="flex flex-col bg-white rounded-lg border-2 p-4">
               <div className="flex items-center w-full">
-                <div className='font-bold text-xl w-full'>{attachment?.label}</div>
+                {document.id === 2 && attachment?.label === 'Form 1770 S' && (
+                  <div
+                    className='flex flex-row gap-4 items-center w-full justify-start'
+                  >
+                    <div className='font-bold text-xl'>{attachment?.label}</div>
+                    <h3 className='text-md text-red-500 italic'>Ada potensi data tidak valid pada form ini.</h3>
+                  </div>
+                )}
+                {(document.id !== 2 || attachment?.label !== 'Form 1770 S') && (
+                  <div className='font-bold text-xl w-full'>{attachment?.label}</div>
+                )}
                 <div className="flex gap-3">
                   <button
                     className="bg-gray-300 px-4 py-3 rounded"

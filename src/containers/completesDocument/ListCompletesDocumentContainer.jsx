@@ -104,7 +104,7 @@ const ListCompletesDocumentContainer = () => {
                       <li>
                         <div className='flex flex-row items-center justify-between w-full gap-8'>
                           <h6 className='font-semibold'>NPWP {item.taxIdNumber}</h6>
-                          <h6 className='text-red-500 text-sm italic'>Ditolak pada {item.rejectedReason.state} dengan
+                          <h6 className='text-red-500 text-xs italic'>Ditolak pada {item.rejectedReason.state} oleh operator John Doe dengan
                             alasan : {item.rejectedReason.text}</h6>
                         </div>
                       </li>
@@ -130,8 +130,8 @@ const ListCompletesDocumentContainer = () => {
                     <IoEyeSharp/>
                   </button>
                   <button
-                    className="bg-gray-300 px-4 py-3 rounded"
-                    onClick={() => toggleAccordion(item.id)}
+                    className={`bg-gray-300 px-4 py-3 rounded ${item.rejectedReason.option !== "" ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+                    {...(item.rejectedReason.option === "" && ({ onClick: () => toggleAccordion(item.id) }))}
                   >
                     <IoChevronDownSharp
                       className={`transform transition-transform duration-300 ${openAccordion === item.id ? 'rotate-180' : ''}`}/>

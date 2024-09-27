@@ -38,7 +38,7 @@ const CompletesDocumentContainer = () => {
                 <li className="list-none">{box?.docs?.length} WP</li>
                 <li>{box?.documentType}</li>
               </ul>
-              <h3 className='text-md text-red-500 italic'>Terdapat 3 WP yang dokumennya tidak lengkap.</h3>
+              <h3 className='text-md text-red-500 italic'>Terdapat 1 WP yang dokumennya tidak lengkap.</h3>
             </div>
 
             <div className="flex gap-3">

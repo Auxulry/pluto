@@ -71,7 +71,7 @@ const ScannerContainer = () => {
                     <li>NPWP {item.taxIdNumber}</li>
                   </ul>
                   <ul className="list-disc flex gap-6">
-                    <li className="list-none">{item.attachments.length} Dokumen</li>
+                    <li className="list-none">{item.attachments.filter((e) => e.src !== "").length} Dokumen</li>
                   </ul>
                 </div>
                 <div className="flex gap-3">
