@@ -60,6 +60,12 @@ export default function NavMenu() {
       >
         Review Rejected
       </h6>
+      <h6
+        className={`text-md font-bold cursor-pointer ${isActive('/ready-to-go')}`}
+        onClick={() => router.push('/ready-to-go')}
+      >
+        Kirim Ke Gudang Akhir
+      </h6>
     </div>
   );
 }

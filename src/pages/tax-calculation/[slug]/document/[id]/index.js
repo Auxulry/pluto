@@ -6,6 +6,7 @@ import {boxScanner} from "@/mocks/scanner";
 import Modal from "@/components/atoms/modal/Modal";
 import {getStorage, setStorages} from "@/commons/storage";
 import {rejectOptions} from "@/mocks/reason";
+import Paper from "@/components/atoms/paper/Paper";
 
 export default function ScannerPreview() {
   const [openAccordion, setOpenAccordion] = useState(null);
@@ -60,8 +61,8 @@ export default function ScannerPreview() {
     const serialize = JSON.parse(data)
     const docs = serialize.boxScanner.docs.find((doc) => doc.id === parseInt(router.query.id))
     docs.rejectedReason = {
-      option: selectedReason,
-      text: selectedReason !== '5' ? rejectOptions.find((e) => e.value === selectedReason).label : text,
+      option: 5,
+      text: `Terdapat kesalahan perhitungan pada bagian ${validateKeys.join(",")}`,
       state: 'Perhitungan Pajak'
     }
 
@@ -85,6 +86,19 @@ export default function ScannerPreview() {
     return selectedAttachment.includes(label)
   }
 
+  const [validateKeys, setValidateKeys] = useState([])
+
+  const onValidate = (key) => {
+    setValidateKeys((prevKeys) => {
+      if (prevKeys.includes(key)) {
+        // Key exists, remove it
+        return prevKeys.filter(k => k !== key);
+      } else {
+        // Key doesn't exist, add it
+        return [...prevKeys, key];
+      }
+    });
+  };
 
   return (
     <MainLayout>
@@ -126,10 +140,10 @@ export default function ScannerPreview() {
                 </div>
               </div>
               <div
-                className={`mt-4 overflow-hidden transition-max-height duration-300 ease-in-out ${openAccordion === attachment?.label ? 'max-h-200' : 'max-h-0'}`}
+                className={`mt-4 overflow-hidden transition-max-height duration-300 ease-in-out overflow-x-auto ${openAccordion === attachment?.label ? 'max-h-200' : 'max-h-0'}`}
               >
-                <div className='flex flex-row gap-2 items-center'>
-                  <div className='flex flex-col'>
+                <div className='flex flex-row gap-2 items-start w-full'>
+                  <div className='flex flex-col w-[30%]'>
                     <h6 className='text-md'>Hasil Pindai</h6>
                     <div className="relative w-full h-auto">
                       <img
@@ -140,20 +154,23 @@ export default function ScannerPreview() {
                       <div className="absolute inset-0 bg-gray-500 opacity-50"></div>
                     </div>
                   </div>
-                  <div className='flex flex-col'>
+                  <div className='flex flex-col w-full overflow-x-auto'>
                     <h6 className='text-md'>Hasil Baca</h6>
                     <div className="w-full h-auto">
-                      <img src={attachment.src} alt={`image-${key}`} className="w-full h-auto object-cover shadow-md"/>
+                      {attachment?.label === 'Form 1770 S' && (
+                        <Paper
+                          raw={attachment?.raw}
+                          isValidator={true}
+                          onValidate={onValidate}
+                          validateKeys={validateKeys}
+                        />
+                      )}
+                      {attachment?.label !== 'Form 1770 S' && (
+                        <img src={attachment.src} alt={`image-${key}`}
+                             className="w-full h-auto object-cover shadow-md"/>
+                      )}
                     </div>
                   </div>
-                  {isAttachmentActive(attachment?.label) && (
-                    <div className='border-slim w-[20px] h-[20px] cursor-pointer text-center'
-                         onClick={() => handleSelectAttachment(attachment?.label)}>X</div>
-                  )}
-                  {!isAttachmentActive(attachment?.label) && (
-                    <div className='border-slim w-[20px] h-[20px] cursor-pointer'
-                         onClick={() => handleSelectAttachment(attachment?.label)}></div>
-                  )}
                 </div>
               </div>
             </div>
@@ -179,26 +196,27 @@ export default function ScannerPreview() {
           width='w-1/3'
         >
           <h2 className="text-2xl font-bold mb-4">Reject Document</h2>
-          <div className='flex flex-col gap-4'>
-            <select
-              value={selectedReason}
-              onChange={handleSelectChange}
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent"
-            >
-              <option value="">Select Reason</option>
-              {rejectOptions.map((option) => (
-                <option key={option.label} value={option.value}>{option.label}</option>
-              ))}
-            </select>
-            {selectedReason === "5" && (
-              <textarea
-                placeholder="Enter your message..."
-                className="w-full h-40 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent resize-none"
-                value={text}
-                onChange={handleChangeText}
-              />
-            )}
-          </div>
+          <h6 className='text-md text-center'>Apakah kamu yakin ingin melakukan rejection pada dokumen ini ?</h6>
+          {/*<div className='flex flex-col gap-4'>*/}
+          {/*  <select*/}
+          {/*    value={selectedReason}*/}
+          {/*    onChange={handleSelectChange}*/}
+          {/*    className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent"*/}
+          {/*  >*/}
+          {/*    <option value="">Select Reason</option>*/}
+          {/*    {rejectOptions.map((option) => (*/}
+          {/*      <option key={option.label} value={option.value}>{option.label}</option>*/}
+          {/*    ))}*/}
+          {/*  </select>*/}
+          {/*  {selectedReason === "5" && (*/}
+          {/*    <textarea*/}
+          {/*      placeholder="Enter your message..."*/}
+          {/*      className="w-full h-40 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent resize-none"*/}
+          {/*      value={text}*/}
+          {/*      onChange={handleChangeText}*/}
+          {/*    />*/}
+          {/*  )}*/}
+          {/*</div>*/}
           <div className='flex flex-row-reverse items-center gap-4 mt-4'>
             <button
               className='px-4 py-2 rounded focus:outline-none font-medium bg-red-500 text-white hover:bg-red-600'

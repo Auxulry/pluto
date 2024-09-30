@@ -6,6 +6,8 @@ import {boxScanner} from "@/mocks/scanner";
 import Modal from "@/components/atoms/modal/Modal";
 import {rejectOptions} from "@/mocks/reason";
 import {getStorage, setStorages} from "@/commons/storage";
+import Paper from "@/components/atoms/paper/Paper";
+import PaperV2 from "@/components/atoms/paper/PaperV2";
 
 export default function ScannerPreview() {
   const [openAccordion, setOpenAccordion] = useState(null);
@@ -126,10 +128,10 @@ export default function ScannerPreview() {
                 </div>
               </div>
               <div
-                className={`mt-4 overflow-hidden transition-max-height duration-300 ease-in-out ${openAccordion === attachment?.label ? 'max-h-200' : 'max-h-0'}`}
+                className={`mt-4 overflow-hidden transition-max-height duration-300 ease-in-out overflow-x-auto ${openAccordion === attachment?.label ? 'max-h-200' : 'max-h-0'}`}
               >
-                <div className='flex flex-row gap-2 items-center'>
-                  <div className='flex flex-col'>
+                <div className='flex flex-row gap-2 items-start w-full'>
+                  <div className='flex flex-col w-[30%]'>
                     <h6 className='text-md'>Hasil Pindai</h6>
                     <div className="relative w-full h-auto">
                       <img
@@ -140,10 +142,16 @@ export default function ScannerPreview() {
                       <div className="absolute inset-0 bg-gray-500 opacity-50"></div>
                     </div>
                   </div>
-                  <div className='flex flex-col'>
+                  <div className='flex flex-col w-full overflow-x-auto'>
                     <h6 className='text-md'>Hasil Baca</h6>
                     <div className="w-full h-auto">
-                      <img src={attachment.src} alt={`image-${key}`} className="w-full h-auto object-cover shadow-md"/>
+                      {attachment?.label === 'Form 1770 S' && (
+                        <Paper raw={attachment?.raw} isValidator={false}  />
+                      )}
+                      {attachment?.label !== 'Form 1770 S' && (
+                        <img src={attachment.src} alt={`image-${key}`}
+                             className="w-full h-auto object-cover shadow-md"/>
+                      )}
                     </div>
                   </div>
                   {isAttachmentActive(attachment?.label) && (

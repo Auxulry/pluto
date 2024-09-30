@@ -1,33 +1,23 @@
-import React from "react";
-
-export default function Paper({
-  raw,
-  isValidator = false,
-  onValidate = () => {},
-  validateKeys = []
-}) {
-  const handleValidation = (key) => {
-    onValidate(key)
-  }
+export default function PaperV2() {
   return (
     <div
-      className='paper-container max-w-[895.5px]'
+      className='relative flex flex-col justify-center items-center w-[600px] h-auto p-4 box-border'
     >
       <div className='paper-pin absolute left-0 top-0'></div>
       <div className='paper-pin absolute right-0 top-0'></div>
       <div className='paper-pin absolute left-0 bottom-0'></div>
       <div className='paper-pin absolute right-0 bottom-0'></div>
-      <div className='mt-[15px] flex flex-col'>
+      <div className='mt-[15px]'>
         <div className='flex flex-row'>
-          <div className='flex flex-row border-b-2 border-r-2 border-black py-4'>
+          <div className='flex flex-row border-b-2 border-r-2 border-black py-4 w-1/4'>
             <p className='[writing-mode:vertical-lr] rotate-180 text-[10pt] font-bold px-1 text-center'>FORMULIR</p>
-            <div className='flex flex-col items-center px-2'>
+            <div className='flex flex-col items-center px-2 w-full'>
               <h4 className='text-[28pt] font-bold'>1770 S</h4>
               <h5 className='text-[9pt] font-bold'>KEMENTRIAN KEUANGAN RI</h5>
               <h5 className='text-[9pt] font-bold'>DIREKTORAT JENDRAL PAJAK</h5>
             </div>
           </div>
-          <div className='flex flex-col'>
+          <div className='flex flex-col w-3/5'>
             <div className='flex flex-col gap-2 items-center px-8 border-b-2 border-black'>
               <h4 className='text-[14pt] font-bold'>SPT TAHUNAN</h4>
               <h5 className='text-[11pt] font-bold'>PAJAK PENGHASILAN WAJIB PAJAK ORANG PRIBADI</h5>
@@ -41,31 +31,31 @@ export default function Paper({
               </ul>
             </div>
           </div>
-          <div className='flex flex-row border-b-2 border-l-2 border-black'>
+          <div className='flex flex-row border-b-2 border-l-2 border-black py-4 w-[15%]'>
             <p className='[writing-mode:vertical-lr] rotate-180 text-[10pt] font-bold px-1 text-center'>TAHUN PAJAK</p>
-            <div className='flex flex-col items-start gap-7'>
-              <div className='flex flex-row'>
-                <div className='border-slim text-[24pt] w-[44px] text-center font-bold'>
+            <div className='flex flex-col items-start gap-7 w-full'>
+              <div className='flex flex-row w-full'>
+                <div className='border-slim text-[24pt] w-1/4 text-center font-bold'>
                   2
                 </div>
-                <div className='border-slim text-[24pt] w-[44px] text-center font-bold'>
+                <div className='border-slim text-[24pt] w-1/4 text-center font-bold'>
                   0
                 </div>
-                <div className='border-slim text-[24pt] w-[44px] text-center font-bold'>
-                  {raw?.taxYear.split('')[0] || ""}
+                <div className='border-slim text-[24pt] w-1/4 text-center font-bold'>
+
                 </div>
-                <div className='border-slim text-[24pt] w-[44px] text-center font-bold'>
-                  {raw?.taxYear.split('')[1] || ""}
+                <div className='border-slim text-[24pt] w-1/4 text-center font-bold'>
+
                 </div>
               </div>
-              <div className='flex flex-row items-center gap-1'>
-                <div className='border-2 border-black w-[30px] h-[20px]'></div>
+              <div className='flex flex-row items-center gap-1 w-full'>
+                <div className='border-2 border-black w-[15%] h-[20px]'></div>
                 <h5 className='text-[8pt] font-bold'>SPT PEMBETULAN KE - ...</h5>
               </div>
             </div>
           </div>
         </div>
-        <div className='flex flex-row items-center px-6 gap-notice'>
+        <div className='flex flex-row items-center px-6 gap-notice w-full'>
           <div className='flex flex-row items-center gap-2'>
             <h5 className='text-[8pt] font-bold'>PERHATIAN</h5>
             <span className='text-[10pt]'>&#8226;</span>
@@ -93,147 +83,63 @@ export default function Paper({
                 <tr>
                   <td className='text-[8pt]'>NPWP</td>
                   <td className='text-[8pt]'>:</td>
-                  <td className='flex flex-row'>
-                    <h6 className='text-[8pt]'>{raw?.identity?.taxIdNumber || ''}</h6>
-                    {/*{!raw?.identity?.taxIdNumber && (*/}
-                    {/*  <>*/}
-                    {/*    <div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*    <div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*    <div className='w-[22px] h-[22px]'></div>*/}
-                    {/*    <div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*    <div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*    <div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*    <div className='w-[22px] h-[22px]'></div>*/}
-                    {/*    <div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*    <div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*    <div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*    <div className='w-[22px] h-[22px]'></div>*/}
-                    {/*    <div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*    <div className='w-[22px] h-[22px]'></div>*/}
-                    {/*    <div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*    <div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*    <div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*    <div className='w-[22px] h-[22px]'></div>*/}
-                    {/*    <div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*    <div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*    <div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*  </>*/}
-                    {/*)}*/}
+                  <td className='text-[8pt]'>
+                    62.166.466.6-665.666
                   </td>
                 </tr>
                 <tr>
                   <td className='text-[8pt]'>NAMA WAJIB PAJAK</td>
                   <td className='text-[8pt]'>:</td>
-                  <td className='flex flex-row'>
-                    <h6 className='text-[8pt]'>{raw?.identity?.name || ''}</h6>
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
+                  <td className='text-[8pt]'>
+                    MOANALISA
                   </td>
                 </tr>
                 <tr>
                   <td className='text-[8pt]'>PEKERJAAN</td>
                   <td className='text-[8pt]'>:</td>
-                  <td className='flex flex-row'>
-                    <h6 className='text-[8pt]'>{raw?.identity?.job || ''}</h6>
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    <div className='w-[66px] h-[22px] text-[8pt] text-center'>KLU :</div>
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    <h6 className='text-[8pt]'>{raw?.identity?.klu || ''}</h6>
+                  <td className='flex flex-row gap-8'>
+                    <h6 className='text-[8pt]'>KARYAWAN</h6>
+                    <div className='flex flex-row'>
+                      <div className='w-[66px] h-[22px] text-[8pt] text-center'>KLU : 990000</div>
+                    </div>
                   </td>
                 </tr>
                 <tr>
-                  <td className='text-[8pt]'>NO.TELEPON</td>
+                <td className='text-[8pt]'>NO.TELEPON</td>
                   <td className='text-[8pt]'>:</td>
                   <td className='flex flex-row'>
-                    <h6 className='text-[8pt]'>{raw?.identity?.phone || ''}</h6>
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='w-[22px] h-[22px] text-[8pt] text-center'>-</div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
+                    <div className='border-super-slim w-[22px] h-[22px]'></div>
+                    <div className='border-super-slim w-[22px] h-[22px]'></div>
+                    <div className='border-super-slim w-[22px] h-[22px]'></div>
+                    <div className='border-super-slim w-[22px] h-[22px]'></div>
+                    <div className='w-[22px] h-[22px] text-[8pt] text-center'>-</div>
+                    <div className='border-super-slim w-[22px] h-[22px]'></div>
+                    <div className='border-super-slim w-[22px] h-[22px]'></div>
+                    <div className='border-super-slim w-[22px] h-[22px]'></div>
+                    <div className='border-super-slim w-[22px] h-[22px]'></div>
+                    <div className='border-super-slim w-[22px] h-[22px]'></div>
+                    <div className='border-super-slim w-[22px] h-[22px]'></div>
+                    <div className='border-super-slim w-[22px] h-[22px]'></div>
+                    <div className='border-super-slim w-[22px] h-[22px]'></div>
                     <div className='w-[110px] h-[22px] text-[8pt] text-center'>NO. FAKS :</div>
-                    <h6 className='text-[8pt]'>{raw?.identity?.faksNo || ''}</h6>
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='w-[22px] h-[22px] text-[8pt] text-center'>-</div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
-                    {/*<div className='border-super-slim w-[22px] h-[22px]'></div>*/}
+                    <div className='border-super-slim w-[22px] h-[22px]'></div>
+                    <div className='border-super-slim w-[22px] h-[22px]'></div>
+                    <div className='border-super-slim w-[22px] h-[22px]'></div>
+                    <div className='border-super-slim w-[22px] h-[22px]'></div>
+                    <div className='w-[22px] h-[22px] text-[8pt] text-center'>-</div>
+                    <div className='border-super-slim w-[22px] h-[22px]'></div>
+                    <div className='border-super-slim w-[22px] h-[22px]'></div>
+                    <div className='border-super-slim w-[22px] h-[22px]'></div>
+                    <div className='border-super-slim w-[22px] h-[22px]'></div>
+                    <div className='border-super-slim w-[22px] h-[22px]'></div>
+                    <div className='border-super-slim w-[22px] h-[22px]'></div>
+                    <div className='border-super-slim w-[22px] h-[22px]'></div>
+                    <div className='border-super-slim w-[22px] h-[22px]'></div>
                   </td>
                 </tr>
                 <tr>
                   <td>
-                  <h6 className='text-[8pt] w-[145px] text-wrap'>STATUS KEWAJIBAN PERPAJAKAN SUAMI-ISTERI</h6>
+                    <h6 className='text-[8pt] w-[145px] text-wrap'>STATUS KEWAJIBAN PERPAJAKAN SUAMI-ISTERI</h6>
                   </td>
                   <td className='text-[8pt]'>:</td>
                   <td className='flex flex-row items-center'>
@@ -323,25 +229,13 @@ export default function Paper({
                       </h5>
                     </div>
                   </div>
-                  <div className='flex flex-row relative'>
+                  <div className='flex flex-row'>
                     <div className='border-2 border-black w-[25px] h-[30px] text-center'>1</div>
-                    <input
-                      type='number'
-                      className='border-super-slim-t border-super-slim-b w-[231px] h-[30px] text-center'
-                      value={raw?.netIncome?.first || 0}
-                    />
-                    {isValidator && (
-                      <div
-                        className='absolute -right-6 top-1.5 border-slim w-[20px] h-[20px] cursor-pointer text-center'
-                        onClick={() => { handleValidation("a.1") }}
-                      >
-                        {validateKeys.includes("a.1") ? "X" : ''}
-                      </div>
-                    )}
+                    <div className='border-super-slim-t border-super-slim-b w-[231px] h-[30px] text-center'></div>
                   </div>
                 </div>
                 <div className='flex flex-row items-center gap-1'>
-                <div className='flex flex-row items-start gap-2 pl-2 pr-2 w-[583.59px]'>
+                  <div className='flex flex-row items-start gap-2 pl-2 pr-2 w-[583.59px]'>
                     <h6 className='text-[8pt]'>2</h6>
                     <div className='flex flex-col'>
                       <h6 className='text-[8pt]'>
@@ -353,21 +247,9 @@ export default function Paper({
                       </h5>
                     </div>
                   </div>
-                  <div className='flex flex-row relative'>
+                  <div className='flex flex-row'>
                     <div className='border-2 border-black w-[25px] h-[30px] text-center'>2</div>
-                    <input
-                      type='number'
-                      className='border-super-slim-t border-super-slim-b w-[231px] h-[30px] text-center'
-                      value={raw?.netIncome?.second || 0}
-                    />
-                    {isValidator && (
-                      <div
-                        className='absolute -right-6 top-1.5 border-slim w-[20px] h-[20px] cursor-pointer text-center'
-                        onClick={() => { handleValidation("a.2") }}
-                      >
-                        {validateKeys.includes("a.2") ? "X" : ''}
-                      </div>
-                    )}
+                    <div className='border-super-slim-t border-super-slim-b w-[231px] h-[30px] text-center'></div>
                   </div>
                 </div>
                 <div className='flex flex-row items-center gap-1'>
@@ -385,21 +267,9 @@ export default function Paper({
                       </h5>
                     </div>
                   </div>
-                  <div className='flex flex-row relative'>
+                  <div className='flex flex-row'>
                     <div className='border-2 border-black w-[25px] h-[30px] text-center'>3</div>
-                    <input
-                      type='number'
-                      className='border-super-slim-t border-super-slim-b w-[231px] h-[30px] text-center'
-                      value={raw?.netIncome?.third || 0}
-                    />
-                    {isValidator && (
-                      <div
-                        className='absolute -right-6 top-1.5 border-slim w-[20px] h-[20px] cursor-pointer text-center'
-                        onClick={() => { handleValidation("a.3") }}
-                      >
-                        {validateKeys.includes("a.3") ? "X" : ''}
-                      </div>
-                    )}
+                    <div className='border-super-slim-t border-super-slim-b w-[231px] h-[30px] text-center'></div>
                   </div>
                 </div>
                 <div className='flex flex-row items-center gap-1'>
@@ -412,21 +282,9 @@ export default function Paper({
                       </h6>
                     </div>
                   </div>
-                  <div className='flex flex-row relative'>
+                  <div className='flex flex-row'>
                     <div className='border-2 border-black w-[25px] h-[30px] text-center'>4</div>
-                    <input
-                      type='number'
-                      className='border-super-slim-t border-super-slim-b w-[231px] h-[30px] text-center'
-                      value={raw?.netIncome?.fourth || 0}
-                    />
-                    {isValidator && (
-                      <div
-                        className='absolute -right-6 top-1.5 border-slim w-[20px] h-[20px] cursor-pointer text-center'
-                        onClick={() => { handleValidation("a.4") }}
-                      >
-                        {validateKeys.includes("a.4") ? "X" : ''}
-                      </div>
-                    )}
+                    <div className='border-super-slim-t border-super-slim-b w-[231px] h-[30px] text-center'></div>
                   </div>
                 </div>
                 <div className='flex flex-row items-center gap-1'>
@@ -439,21 +297,9 @@ export default function Paper({
                       </h6>
                     </div>
                   </div>
-                  <div className='flex flex-row relative'>
+                  <div className='flex flex-row'>
                     <div className='border-2 border-black w-[25px] h-[30px] text-center'>5</div>
-                    <input
-                      type='number'
-                      className='border-super-slim-t border-super-slim-b w-[231px] h-[30px] text-center'
-                      value={raw?.netIncome?.fifth || 0}
-                    />
-                    {isValidator && (
-                      <div
-                        className='absolute -right-6 top-1.5 border-slim w-[20px] h-[20px] cursor-pointer text-center'
-                        onClick={() => { handleValidation("a.5") }}
-                      >
-                        {validateKeys.includes("a.5") ? "X" : ''}
-                      </div>
-                    )}
+                    <div className='border-super-slim-t border-super-slim-b w-[231px] h-[30px] text-center'></div>
                   </div>
                 </div>
                 <div className='flex flex-row items-center gap-1'>
@@ -465,21 +311,9 @@ export default function Paper({
                       </h6>
                     </div>
                   </div>
-                  <div className='flex flex-row relative'>
+                  <div className='flex flex-row'>
                     <div className='border-2 border-black w-[25px] h-[30px] text-center'>6</div>
-                    <input
-                      type='number'
-                      className='border-super-slim-t border-super-slim-b w-[231px] h-[30px] text-center'
-                      value={raw?.netIncome?.sixth || 0}
-                    />
-                    {isValidator && (
-                      <div
-                        className='absolute -right-6 top-1.5 border-slim w-[20px] h-[20px] cursor-pointer text-center'
-                        onClick={() => { handleValidation("a.6") }}
-                      >
-                        {validateKeys.includes("a.6") ? "X" : ''}
-                      </div>
-                    )}
+                    <div className='border-super-slim-t border-super-slim-b w-[231px] h-[30px] text-center'></div>
                   </div>
                 </div>
               </div>
@@ -500,49 +334,25 @@ export default function Paper({
                       <div className='flex flex-row items-start gap-0.5'>
                         <h6 className='text-[8pt]'>TK</h6>
                         <h6 className='text-[8pt]'>/</h6>
-                        <input
-                          className='text-[8pt] w-[22px] h-[22px] border-super-slim mt-[-5px]'
-                          type='text'
-                          value={raw?.taxableIncome?.tk || ''}
-                        />
+                        <div className='text-[8pt] w-[22px] h-[22px] border-super-slim mt-[-5px]'></div>
                       </div>
                       <div className='flex flex-row items-start gap-0.5'>
                         <h6 className='text-[8pt]'>K</h6>
                         <h6 className='text-[8pt]'>/</h6>
-                        <input
-                          className='text-[8pt] w-[22px] h-[22px] border-super-slim mt-[-5px]'
-                          type='text'
-                          value={raw?.taxableIncome?.k || ''}
-                        />
+                        <div className='text-[8pt] w-[22px] h-[22px] border-super-slim mt-[-5px]'></div>
                       </div>
                       <div className='flex flex-row items-start gap-0.5'>
                         <h6 className='text-[8pt]'>K</h6>
                         <h6 className='text-[8pt]'>/</h6>
                         <h6 className='text-[8pt]'>I</h6>
                         <h6 className='text-[8pt]'>/</h6>
-                        <input
-                          className='text-[8pt] w-[22px] h-[22px] border-super-slim mt-[-5px]'
-                          type='text'
-                          value={raw?.taxableIncome?.kOrI || ''}
-                        />
+                        <div className='text-[8pt] w-[22px] h-[22px] border-super-slim mt-[-5px]'></div>
                       </div>
                     </div>
                   </div>
-                  <div className='flex flex-row relative'>
+                  <div className='flex flex-row'>
                     <div className='border-2 border-black w-[25px] h-[30px] text-center'>7</div>
-                    <input
-                      type='number'
-                      className='border-super-slim-t border-super-slim-b w-[231px] h-[30px] text-center'
-                      value={raw?.taxableIncome?.seventh || 0}
-                    />
-                    {isValidator && (
-                      <div
-                        className='absolute -right-6 top-1.5 border-slim w-[20px] h-[20px] cursor-pointer text-center'
-                        onClick={() => { handleValidation("b.7") }}
-                      >
-                        {validateKeys.includes("b.7") ? "X" : ''}
-                      </div>
-                    )}
+                    <div className='border-super-slim-t border-super-slim-b w-[231px] h-[30px] text-center'></div>
                   </div>
                 </div>
                 <div className='flex flex-row items-center gap-1'>
@@ -555,21 +365,9 @@ export default function Paper({
                       </h6>
                     </div>
                   </div>
-                  <div className='flex flex-row relative'>
+                  <div className='flex flex-row'>
                     <div className='border-2 border-black w-[25px] h-[30px] text-center'>8</div>
-                    <input
-                      type='number'
-                      className='border-super-slim-t border-super-slim-b w-[231px] h-[30px] text-center'
-                      value={raw?.taxableIncome?.eight || 0}
-                    />
-                    {isValidator && (
-                      <div
-                        className='absolute -right-6 top-1.5 border-slim w-[20px] h-[20px] cursor-pointer text-center'
-                        onClick={() => { handleValidation("b.8") }}
-                      >
-                        {validateKeys.includes("b.8") ? "X" : ''}
-                      </div>
-                    )}
+                    <div className='border-super-slim-t border-super-slim-b w-[231px] h-[30px] text-center'></div>
                   </div>
                 </div>
               </div>
@@ -594,21 +392,9 @@ export default function Paper({
                       </h5>
                     </div>
                   </div>
-                  <div className='flex flex-row relative'>
+                  <div className='flex flex-row'>
                     <div className='border-2 border-black w-[25px] h-[30px] text-center'>9</div>
-                    <input
-                      type='number'
-                      className='border-super-slim-t border-super-slim-b w-[231px] h-[30px] text-center'
-                      value={raw?.incomeTaxPayable?.ninth || 0}
-                    />
-                    {isValidator && (
-                      <div
-                        className='absolute -right-6 top-1.5 border-slim w-[20px] h-[20px] cursor-pointer text-center'
-                        onClick={() => { handleValidation("c.9") }}
-                      >
-                        {validateKeys.includes("c.9") ? "X" : ''}
-                      </div>
-                    )}
+                    <div className='border-super-slim-t border-super-slim-b w-[231px] h-[30px] text-center'></div>
                   </div>
                 </div>
                 <div className='flex flex-row items-center gap-1'>
@@ -621,21 +407,9 @@ export default function Paper({
                       </h6>
                     </div>
                   </div>
-                  <div className='flex flex-row relative'>
+                  <div className='flex flex-row'>
                     <div className='border-2 border-black w-[25px] h-[30px] text-center'>10</div>
-                    <input
-                      type='number'
-                      className='border-super-slim-t border-super-slim-b w-[231px] h-[30px] text-center'
-                      value={raw?.incomeTaxPayable?.ten || 0}
-                    />
-                    {isValidator && (
-                      <div
-                        className='absolute -right-6 top-1.5 border-slim w-[20px] h-[20px] cursor-pointer text-center'
-                        onClick={() => { handleValidation("c.10") }}
-                      >
-                        {validateKeys.includes("c.10") ? "X" : ''}
-                      </div>
-                    )}
+                    <div className='border-super-slim-t border-super-slim-b w-[231px] h-[30px] text-center'></div>
                   </div>
                 </div>
                 <div className='flex flex-row items-center gap-1'>
@@ -648,21 +422,9 @@ export default function Paper({
                       </h6>
                     </div>
                   </div>
-                  <div className='flex flex-row relative'>
+                  <div className='flex flex-row'>
                     <div className='border-2 border-black w-[25px] h-[30px] text-center'>11</div>
-                    <input
-                      type='number'
-                      className='border-super-slim-t border-super-slim-b w-[231px] h-[30px] text-center'
-                      value={raw?.incomeTaxPayable?.eleven || 0}
-                    />
-                    {isValidator && (
-                      <div
-                        className='absolute -right-6 top-1.5 border-slim w-[20px] h-[20px] cursor-pointer text-center'
-                        onClick={() => { handleValidation("c.11") }}
-                      >
-                        {validateKeys.includes("c.11") ? "X" : ''}
-                      </div>
-                    )}
+                    <div className='border-super-slim-t border-super-slim-b w-[231px] h-[30px] text-center'></div>
                   </div>
                 </div>
               </div>
