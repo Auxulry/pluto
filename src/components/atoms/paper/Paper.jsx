@@ -1,14 +1,62 @@
-import React from "react";
+import React, {useEffect} from "react";
 
 export default function Paper({
   raw,
   isValidator = false,
   onValidate = () => {},
-  validateKeys = []
+  changeStorage = (raw, raw1) => {},
+  validateKeys = [],
+  paperId = '',
+  scan
 }) {
   const handleValidation = (key) => {
     onValidate(key)
   }
+
+  const handleInputChange = (e, key) => {
+    switch (key) {
+      case "a.1":
+        raw.netIncome.first = parseInt(e.target.value);
+        break
+      case "a.2":
+        raw.netIncome.second = parseInt(e.target.value);
+        break
+      case "a.3":
+        raw.netIncome.third = parseInt(e.target.value);
+        break
+      case "a.4":
+        raw.netIncome.fourth = parseInt(e.target.value);
+        break
+      case "a.5":
+        raw.netIncome.fifth = parseInt(e.target.value);
+        break
+      case "a.6":
+        raw.netIncome.sixth = parseInt(e.target.value);
+        break
+      case "b.7":
+        raw.taxableIncome.seventh = parseInt(e.target.value);
+        break
+      case "b.8":
+        raw.taxableIncome.eight = parseInt(e.target.value);
+        break
+      case "c.9":
+        raw.incomeTaxPayable.ninth = parseInt(e.target.value);
+        break
+      case "c.10":
+        raw.incomeTaxPayable.ten = parseInt(e.target.value);
+        break
+      default:
+        raw.incomeTaxPayable.eleven = parseInt(e.target.value);
+        break
+    }
+
+    changeStorage(paperId, raw)
+  }
+
+  const hasSyncField = (expected, actual) => {
+    return actual === expected
+  }
+
   return (
     <div
       className='paper-container max-w-[895.5px]'
@@ -324,11 +372,12 @@ export default function Paper({
                     </div>
                   </div>
                   <div className='flex flex-row relative'>
-                    <div className='border-2 border-black w-[25px] h-[30px] text-center'>1</div>
+                    <div className={`border-2 ${hasSyncField(raw?.netIncome?.first, scan?.netIncome?.first) ? 'border-black' : 'border-red-500'} w-[25px] h-[30px] text-center`}>1</div>
                     <input
                       type='number'
-                      className='border-super-slim-t border-super-slim-b w-[231px] h-[30px] text-center'
+                      className={`${hasSyncField(raw?.netIncome?.first, scan?.netIncome?.first) ? 'border-super-slim-t border-super-slim-b' : 'border-super-red-slim-t border-super-red-slim-b'}  w-[231px] h-[30px] text-center`}
                       value={raw?.netIncome?.first || 0}
+                      onChange={(e) => handleInputChange(e, "a.1")}
                     />
                     {isValidator && (
                       <div
@@ -354,11 +403,12 @@ export default function Paper({
                     </div>
                   </div>
                   <div className='flex flex-row relative'>
-                    <div className='border-2 border-black w-[25px] h-[30px] text-center'>2</div>
+                    <div className={`border-2 ${hasSyncField(raw?.netIncome?.second, scan?.netIncome?.second) ? 'border-black' : 'border-red-500'} w-[25px] h-[30px] text-center`}>1</div>
                     <input
                       type='number'
-                      className='border-super-slim-t border-super-slim-b w-[231px] h-[30px] text-center'
+                      className={`${hasSyncField(raw?.netIncome?.second, scan?.netIncome?.second) ? 'border-super-slim-t border-super-slim-b' : 'border-super-red-slim-t border-super-red-slim-b'}  w-[231px] h-[30px] text-center`}
                       value={raw?.netIncome?.second || 0}
+                      onChange={(e) => handleInputChange(e, "a.2")}
                     />
                     {isValidator && (
                       <div
@@ -386,11 +436,12 @@ export default function Paper({
                     </div>
                   </div>
                   <div className='flex flex-row relative'>
-                    <div className='border-2 border-black w-[25px] h-[30px] text-center'>3</div>
+                    <div className={`border-2 ${hasSyncField(raw?.netIncome?.third, scan?.netIncome?.third) ? 'border-black' : 'border-red-500'} w-[25px] h-[30px] text-center`}>1</div>
                     <input
                       type='number'
-                      className='border-super-slim-t border-super-slim-b w-[231px] h-[30px] text-center'
+                      className={`${hasSyncField(raw?.netIncome?.third, scan?.netIncome?.third) ? 'border-super-slim-t border-super-slim-b' : 'border-super-red-slim-t border-super-red-slim-b'}  w-[231px] h-[30px] text-center`}
                       value={raw?.netIncome?.third || 0}
+                      onChange={(e) => handleInputChange(e, "a.3")}
                     />
                     {isValidator && (
                       <div
@@ -413,11 +464,12 @@ export default function Paper({
                     </div>
                   </div>
                   <div className='flex flex-row relative'>
-                    <div className='border-2 border-black w-[25px] h-[30px] text-center'>4</div>
+                    <div className={`border-2 ${hasSyncField(raw?.netIncome?.fourth, scan?.netIncome?.fourth) ? 'border-black' : 'border-red-500'} w-[25px] h-[30px] text-center`}>1</div>
                     <input
                       type='number'
-                      className='border-super-slim-t border-super-slim-b w-[231px] h-[30px] text-center'
+                      className={`${hasSyncField(raw?.netIncome?.fourth, scan?.netIncome?.fourth) ? 'border-super-slim-t border-super-slim-b' : 'border-super-red-slim-t border-super-red-slim-b'}  w-[231px] h-[30px] text-center`}
                       value={raw?.netIncome?.fourth || 0}
+                      onChange={(e) => handleInputChange(e, "a.4")}
                     />
                     {isValidator && (
                       <div
@@ -440,11 +492,12 @@ export default function Paper({
                     </div>
                   </div>
                   <div className='flex flex-row relative'>
-                    <div className='border-2 border-black w-[25px] h-[30px] text-center'>5</div>
+                    <div className={`border-2 ${hasSyncField(raw?.netIncome?.fifth, scan?.netIncome?.fifth) ? 'border-black' : 'border-red-500'} w-[25px] h-[30px] text-center`}>1</div>
                     <input
                       type='number'
-                      className='border-super-slim-t border-super-slim-b w-[231px] h-[30px] text-center'
+                      className={`${hasSyncField(raw?.netIncome?.fifth, scan?.netIncome?.fifth) ? 'border-super-slim-t border-super-slim-b' : 'border-super-red-slim-t border-super-red-slim-b'}  w-[231px] h-[30px] text-center`}
                       value={raw?.netIncome?.fifth || 0}
+                      onChange={(e) => handleInputChange(e, "a.5")}
                     />
                     {isValidator && (
                       <div
@@ -466,11 +519,12 @@ export default function Paper({
                     </div>
                   </div>
                   <div className='flex flex-row relative'>
-                    <div className='border-2 border-black w-[25px] h-[30px] text-center'>6</div>
+                    <div className={`border-2 ${hasSyncField(raw?.netIncome?.sixth, scan?.netIncome?.sixth) ? 'border-black' : 'border-red-500'} w-[25px] h-[30px] text-center`}>1</div>
                     <input
                       type='number'
-                      className='border-super-slim-t border-super-slim-b w-[231px] h-[30px] text-center'
+                      className={`${hasSyncField(raw?.netIncome?.sixth, scan?.netIncome?.sixth) ? 'border-super-slim-t border-super-slim-b' : 'border-super-red-slim-t border-super-red-slim-b'}  w-[231px] h-[30px] text-center`}
                       value={raw?.netIncome?.sixth || 0}
+                      onChange={(e) => handleInputChange(e, "a.6")}
                     />
                     {isValidator && (
                       <div
@@ -529,11 +583,12 @@ export default function Paper({
                     </div>
                   </div>
                   <div className='flex flex-row relative'>
-                    <div className='border-2 border-black w-[25px] h-[30px] text-center'>7</div>
+                    <div className={`border-2 ${hasSyncField(raw?.taxableIncome?.seventh , scan?.taxableIncome?.seventh ) ? 'border-black' : 'border-red-500'} w-[25px] h-[30px] text-center`}>1</div>
                     <input
                       type='number'
-                      className='border-super-slim-t border-super-slim-b w-[231px] h-[30px] text-center'
+                      className={`${hasSyncField(raw?.taxableIncome?.seventh , scan?.taxableIncome?.seventh ) ? 'border-super-slim-t border-super-slim-b' : 'border-super-red-slim-t border-super-red-slim-b'}  w-[231px] h-[30px] text-center`}
                       value={raw?.taxableIncome?.seventh || 0}
+                      onChange={(e) => handleInputChange(e, "b.7")}
                     />
                     {isValidator && (
                       <div
@@ -556,11 +611,14 @@ export default function Paper({
                     </div>
                   </div>
                   <div className='flex flex-row relative'>
-                    <div className='border-2 border-black w-[25px] h-[30px] text-center'>8</div>
+                    <div
+                      className={`border-2 ${hasSyncField(raw?.taxableIncome?.eight, scan?.taxableIncome?.eight) ? 'border-black' : 'border-red-500'} w-[25px] h-[30px] text-center`}>1
+                    </div>
                     <input
                       type='number'
-                      className='border-super-slim-t border-super-slim-b w-[231px] h-[30px] text-center'
+                      className={`${hasSyncField(raw?.taxableIncome?.eight, scan?.taxableIncome?.eight) ? 'border-super-slim-t border-super-slim-b' : 'border-super-red-slim-t border-super-red-slim-b'}  w-[231px] h-[30px] text-center`}
                       value={raw?.taxableIncome?.eight || 0}
+                      onChange={(e) => handleInputChange(e, "b.8")}
                     />
                     {isValidator && (
                       <div
@@ -595,11 +653,14 @@ export default function Paper({
                     </div>
                   </div>
                   <div className='flex flex-row relative'>
-                    <div className='border-2 border-black w-[25px] h-[30px] text-center'>9</div>
+                    <div
+                      className={`border-2 ${hasSyncField(raw?.incomeTaxPayable?.ninth, scan?.incomeTaxPayable?.ninth) ? 'border-black' : 'border-red-500'} w-[25px] h-[30px] text-center`}>1
+                    </div>
                     <input
                       type='number'
-                      className='border-super-slim-t border-super-slim-b w-[231px] h-[30px] text-center'
+                      className={`${hasSyncField(raw?.incomeTaxPayable?.ninth, scan?.incomeTaxPayable?.ninth) ? 'border-super-slim-t border-super-slim-b' : 'border-super-red-slim-t border-super-red-slim-b'}  w-[231px] h-[30px] text-center`}
                       value={raw?.incomeTaxPayable?.ninth || 0}
+                      onChange={(e) => handleInputChange(e, "c.9")}
                     />
                     {isValidator && (
                       <div
@@ -622,11 +683,14 @@ export default function Paper({
                     </div>
                   </div>
                   <div className='flex flex-row relative'>
-                    <div className='border-2 border-black w-[25px] h-[30px] text-center'>10</div>
+                    <div
+                      className={`border-2 ${hasSyncField(raw?.incomeTaxPayable?.ten, scan?.incomeTaxPayable?.ten) ? 'border-black' : 'border-red-500'} w-[25px] h-[30px] text-center`}>1
+                    </div>
                     <input
                       type='number'
-                      className='border-super-slim-t border-super-slim-b w-[231px] h-[30px] text-center'
+                      className={`${hasSyncField(raw?.incomeTaxPayable?.ten, scan?.incomeTaxPayable?.ten) ? 'border-super-slim-t border-super-slim-b' : 'border-super-red-slim-t border-super-red-slim-b'}  w-[231px] h-[30px] text-center`}
                       value={raw?.incomeTaxPayable?.ten || 0}
+                      onChange={(e) => handleInputChange(e, "c.10")}
                     />
                     {isValidator && (
                       <div
@@ -649,11 +713,14 @@ export default function Paper({
                     </div>
                   </div>
                   <div className='flex flex-row relative'>
-                    <div className='border-2 border-black w-[25px] h-[30px] text-center'>11</div>
+                    <div
+                      className={`border-2 ${hasSyncField(raw?.incomeTaxPayable?.eleven, scan?.incomeTaxPayable?.eleven) ? 'border-black' : 'border-red-500'} w-[25px] h-[30px] text-center`}>1
+                    </div>
                     <input
                       type='number'
-                      className='border-super-slim-t border-super-slim-b w-[231px] h-[30px] text-center'
+                      className={`${hasSyncField(raw?.incomeTaxPayable?.eleven, scan?.incomeTaxPayable?.eleven) ? 'border-super-slim-t border-super-slim-b' : 'border-super-red-slim-t border-super-red-slim-b'}  w-[231px] h-[30px] text-center`}
                       value={raw?.incomeTaxPayable?.eleven || 0}
+                      onChange={(e) => handleInputChange(e, "c.11")}
                     />
                     {isValidator && (
                       <div

@@ -83,6 +83,53 @@ export default function ScannerPreview() {
     router.push(`/extraction/${router.query?.slug}`)
   }
 
+  const handleChangeStorage = (id, item) => {
+    console.log(id);
+    console.log(item);
+
+    const data = getStorage('__pluto_storage');
+    const serialize = JSON.parse(data);
+
+    // Find the current document being edited
+    const docs = serialize.boxScanner.docs.find((doc) => doc.id === parseInt(router.query.id));
+
+    // Find the attachment and update its raw field
+    const updatedAttachments = docs.attachments.map((attachment) => {
+      if (attachment.id === id) {
+        return {
+          ...attachment,
+          raw: item,  // Update the raw data
+        };
+      }
+      return attachment;
+    });
+
+    // Update docs with the modified attachments
+    const updatedDocs = {
+      ...docs,
+      attachments: updatedAttachments,
+    };
+
+    // Replace the doc in boxScanner docs array
+    serialize.boxScanner.docs = serialize.boxScanner.docs.map((doc) => {
+      if (doc.id === parseInt(router.query.id)) {
+        return updatedDocs;
+      }
+      return doc;
+    });
+
+    // Update state and storage
+    setAttachments(updatedDocs.attachments);
+
+    setStorages([
+      {
+        name: "__pluto_storage",
+        value: JSON.stringify(serialize),
+      },
+    ]);
+  };
+
+
   const isAttachmentActive = (label) => {
     return selectedAttachment.includes(label)
   }
@@ -146,7 +193,13 @@ export default function ScannerPreview() {
                     <h6 className='text-md'>Hasil Baca</h6>
                     <div className="w-full h-auto">
                       {attachment?.label === 'Form 1770 S' && (
-                        <Paper raw={attachment?.raw} isValidator={false}  />
+                        <Paper
+                          raw={attachment?.raw}
+                          isValidator={false}
+                          changeStorage={handleChangeStorage}
+                          paperId={attachment?.id}
+                          scan={attachment?.scan}
+                        />
                       )}
                       {attachment?.label !== 'Form 1770 S' && (
                         <img src={attachment.src} alt={`image-${key}`}

@@ -20,9 +20,43 @@ export const dataPluto = {
         attachments: [
           {
             id: 1,
-            src: '/moanalisa/form-1770-s-moanalisa.png',
+            src: '/moanalisa/john-doe-1770.png',
             label: 'Form 1770 S',
             raw: {
+              taxYear: "24",
+              isFixing: false,
+              identity: {
+                taxIdNumber: '62.126.426.2-265.266',
+                name: 'JOHN DOE',
+                job: 'karyawan',
+                klu: '990000',
+                phone: '021-32001111',
+                faksNo: '-',
+              },
+              netIncome: {
+                first: 190601600,
+                second: 0,
+                third: 0,
+                fourth: 190601600,
+                fifth: 0,
+                sixth: 190601600,
+              },
+              taxableIncome: {
+                tk: '',
+                k: '1',
+                kOri: '',
+                ph: '',
+                hb: '',
+                seventh: 15600000,
+                eight: 175001600
+              },
+              incomeTaxPayable: {
+                ninth: 30000250,
+                ten: 0,
+                eleven: 30000250
+              }
+            },
+            scan: {
               taxYear: "24",
               isFixing: false,
               identity: {
@@ -87,14 +121,14 @@ export const dataPluto = {
         attachments: [
           {
             id: 1,
-            src: '/moanalisa/form-1770-s-moanalisa.png',
+            src: '/moanalisa/roy-1770.png',
             label: 'Form 1770 S',
             raw: {
               taxYear: "24",
               isFixing: false,
               identity: {
-                taxIdNumber: '62.166.466.6-665.666',
-                name: 'MOANALISA',
+                taxIdNumber: '62.136.436.3-365.366',
+                name: 'ROY',
                 job: 'karyawan',
                 klu: '990000',
                 phone: '021-32001111',
@@ -107,6 +141,40 @@ export const dataPluto = {
                 fourth: 190601600,
                 fifth: 0,
                 sixth: 190601600,
+              },
+              taxableIncome: {
+                tk: '',
+                k: '1',
+                kOri: '',
+                ph: '',
+                hb: '',
+                seventh: 15600000,
+                eight: 175001600
+              },
+              incomeTaxPayable: {
+                ninth: 30000250,
+                ten: 0,
+                eleven: 30000250
+              }
+            },
+            scan: {
+              taxYear: "24",
+              isFixing: false,
+              identity: {
+                taxIdNumber: '62.166.466.6-665.666',
+                name: 'MOANALISA',
+                job: 'karyawan',
+                klu: '990000',
+                phone: '021-32001111',
+                faksNo: '-',
+              },
+              netIncome: {
+                first: 190601700,
+                second: 0,
+                third: 0,
+                fourth: 190601700,
+                fifth: 0,
+                sixth: 190601700,
               },
               taxableIncome: {
                 tk: '',
@@ -154,14 +222,48 @@ export const dataPluto = {
         attachments: [
           {
             id: 1,
-            src: '/moanalisa/form-1770-s-moanalisa.png',
+            src: '/moanalisa/ruslan-1770.png',
             label: 'Form 1770 S',
             raw: {
               taxYear: "24",
               isFixing: false,
               identity: {
-                taxIdNumber: '62.166.466.6-665.666',
-                name: 'MOANALISA',
+                taxIdNumber: '62.136.437.3-375.377',
+                name: 'RUSLAN',
+                job: 'karyawan',
+                klu: '990000',
+                phone: '021-32001111',
+                faksNo: '-',
+              },
+              netIncome: {
+                first: 190601600,
+                second: 0,
+                third: 0,
+                fourth: 190601700,
+                fifth: 0,
+                sixth: 190601600,
+              },
+              taxableIncome: {
+                tk: '',
+                k: '1',
+                kOri: '',
+                ph: '',
+                hb: '',
+                seventh: 15600000,
+                eight: 175001600
+              },
+              incomeTaxPayable: {
+                ninth: 30000250,
+                ten: 0,
+                eleven: 30000250
+              }
+            },
+            scan: {
+              taxYear: "24",
+              isFixing: false,
+              identity: {
+                taxIdNumber: '62.136.437.3-375.377',
+                name: 'RUSLAN',
                 job: 'karyawan',
                 klu: '990000',
                 phone: '021-32001111',
@@ -224,6 +326,40 @@ export const dataPluto = {
             src: '/moanalisa/moanalisa-1770-2.png',
             label: 'Form 1770 S',
             raw: {
+              taxYear: "24",
+              isFixing: false,
+              identity: {
+                taxIdNumber: '62.166.466.6-665.666',
+                name: 'MOANALISA',
+                job: 'karyawan',
+                klu: '990000',
+                phone: '021-32001111',
+                faksNo: '-',
+              },
+              netIncome: {
+                first: 190601600,
+                second: 0,
+                third: 0,
+                fourth: 190601600,
+                fifth: 0,
+                sixth: 190601600,
+              },
+              taxableIncome: {
+                tk: '',
+                k: '1',
+                kOri: '',
+                ph: '',
+                hb: '',
+                seventh: 15600000,
+                eight: 175001600
+              },
+              incomeTaxPayable: {
+                ninth: 30000250,
+                ten: 0,
+                eleven: 30000250
+              }
+            },
+            scan: {
               taxYear: "24",
               isFixing: false,
               identity: {
