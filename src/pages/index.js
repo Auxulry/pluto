@@ -306,11 +306,11 @@ export default function Home() {
         {/*  <h6 className='text-md'>Pembetulan SPT Tahunan</h6>*/}
         {/*  <h6 className='text-md'>No. 1264</h6>*/}
         {/*</div>*/}
-        <div
-          className='flex flex-row items-center gap-4'
-        >
-          <Paper />
-        </div>
+        {/*<div*/}
+        {/*  className='flex flex-row items-center gap-4'*/}
+        {/*>*/}
+        {/*  <Paper />*/}
+        {/*</div>*/}
       </div>
     </MainLayout>
   );
